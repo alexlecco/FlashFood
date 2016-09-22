@@ -67,11 +67,11 @@ export default class Cliente extends Component {
     const {usuario, platos, pedidos}  = this.state
 
     // console.group("RENDER_Clientes")
-    console.group("RENDER_Clientes")
+/*    console.group("RENDER_Clientes")
     console.log(    "hayUsuario ", !!usuario)
     console.log(    "hayPlatos  ", !!platos,  platos  && platos.length)
     console.log(    "hayPedidos ", !!pedidos, pedidos && pedidos.length, pedidos && pedidos[0])
-    console.groupEnd()
+    console.groupEnd()*/
 
     const hayDatos   = usuario && platos && pedidos
     const hayPlatos  = platos  && platos.length  > 0
