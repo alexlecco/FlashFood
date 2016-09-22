@@ -29,31 +29,39 @@ export default class Cocinero extends Component {
 
     componentDidMount() {
       const cocinero = this.props.id
+
       Usuario.observar(cocinero, 'cocinero')
       Plato.observar(plato => plato.activo)
       Pedido.observar(pedido => pedido.enCocina(cocinero))
     }
 
     componentWillUnmount(){
-      const cocinero = this.props.id
-      Usuario.detener(cocinero)
+      // const cocinero = this.props.id
+      // Usuario.detener(cocinero)
+
+      const {cocinero} = this.state
+      cocinero && cocinero.detener()
 
       Plato.detener()
       Pedido.detener()
     }
 
-    alAceptar(plato){
+    alAceptar = (plato) => {
         const {pedidos} = this.state
         const cocinero = this.props.id
-        const pedido = pedidos.filter(pedido => pedido.plato == plato.id && pedido.estado == Estados.pedido)[0]
-        console.log("AL_ACEPTAR", pedido)
+
+        console.log("AL_ACEPTAR pedidos", pedidos)
+        console.log("AL_ACEPTAR cocinero", cocinero)
+
+        const pedido = pedidos.find(pedido => pedido.plato === plato.id && pedido.estado === Estados.pedido)
         pedido && pedido.aceptar(cocinero)
     }
 
-    alDisponer(plato){
+    alDisponer = (plato) => {
       const {pedidos} = this.state
-      const pedido = pedidos.filter(pedido => pedido.plato == plato.id && pedido.estado == Estados.aceptado)[0]
+      const cocinero = this.props.id
 
+      const pedido = pedidos.find(pedido => pedido.plato === plato.id && pedido.estado === Estados.aceptado && pedido.cocinero === cocinero)
       pedido && pedido.disponer()
     }
 
@@ -79,7 +87,7 @@ export default class Cocinero extends Component {
       const comanda = this.calcularComanda()
       console.log("CALCULAR COMANDA", comanda)
 
-      return (<AdministrarComanda {...this.props} cocinero={usuario} comanda={comanda} alAceptar={plato => this.alAceptar(plato)} alDisponer={plato => this.alDisponer(plato)}/>)
+      return (<AdministrarComanda {...this.props} cocinero={usuario} comanda={comanda} alAceptar={this.alAceptar} alDisponer={this.alDisponer}/>)
     }
   }
 
@@ -105,7 +113,7 @@ export default class Cocinero extends Component {
                 <Grid>
                   <Col>
                     <Text style={styles.pedido_descripcion}>Esperando</Text>
-                    <Text style={styles.pedido_cantidad}>{estados[Estados.pedido] || "😀"}</Text>
+                    <Text style={styles.pedido_cantidad}>{estados[Estados.pedido] || "ðŸ˜€"}</Text>
                   </Col>
                   <Col>
                     {estados[Estados.pedido] && <Button onPress={ () => alAceptar(plato) }>Producir</Button>}
@@ -116,7 +124,7 @@ export default class Cocinero extends Component {
                 <Grid>
                   <Col>
                     <Text style={styles.pedido_descripcion}>Cocinado</Text>
-                    <Text style={styles.pedido_cantidad}>{estados[Estados.aceptado] || "😟"}</Text>
+                    <Text style={styles.pedido_cantidad}>{estados[Estados.aceptado] || "ðŸ˜Ÿ"}</Text>
                   </Col>
                   <Col>
                     {estados[Estados.aceptado] && <Button onPress={ () => alDisponer(plato)}>Entregar</Button>}
@@ -125,7 +133,7 @@ export default class Cocinero extends Component {
               </CardItem>
               <CardItem>
                 <Text style={styles.pedido_descripcion}>Disponible</Text>
-                <Text style={styles.pedido_cantidad}>{estados[Estados.disponible] || "🙄"}</Text>
+                <Text style={styles.pedido_cantidad}>{estados[Estados.disponible] || "ðŸ™„"}</Text>
               </CardItem>
             </Card>
           </Col>

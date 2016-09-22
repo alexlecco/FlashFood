@@ -43,7 +43,7 @@ export default class Cadete extends Component {
       Pedido.detener()
     }
 
-    alElegir(pedido){
+    alElegir = (pedido) => {
       const cadete = this.props.id
       if(pedido.estado == Estados.disponible){
         pedido.retirar(cadete)
@@ -68,7 +68,7 @@ export default class Cadete extends Component {
       const cocinero = usuarios.find(usuario => usuario.id === pedido.cocinero)
       const cliente  = usuarios.find(usuario => usuario.id === pedido.cliente)
 
-      return <Envio {...this.props} pedido={pedido} plato={plato} cocinero={cocinero} cliente={cliente} alElegir={ () => this.alElegir(pedido) } />
+      return <Envio {...this.props} pedido={pedido} plato={plato} cocinero={cocinero} cliente={cliente} alElegir={ this.alElegir } />
     }
   }
 
@@ -114,7 +114,7 @@ export default class Cadete extends Component {
         <Col>
           <Text style={styles.pedido_descripcion}> Cocinero: </Text>
           <Text style={styles.pedido_cantidad}>{cocinero.nombre}</Text>
-          <Text style={styles.pedido_descripcion}> Dirección: </Text>
+          <Text style={styles.pedido_descripcion}> DirecciÃ³n: </Text>
           <Text style={styles.pedido_cantidad}>{cocinero.domicilio}</Text>
         </Col>
       </Grid>
@@ -130,7 +130,7 @@ export default class Cadete extends Component {
         <Col>
           <Text style={styles.pedido_descripcion}> Cliente: </Text>
           <Text style={styles.pedido_cantidad}>{cliente.nombre}</Text>
-          <Text style={styles.pedido_descripcion}> Dirección: </Text>
+          <Text style={styles.pedido_descripcion}> DirecciÃ³n: </Text>
           <Text style={styles.pedido_cantidad}>{cliente.domicilio}</Text>
         </Col>
       </Grid>
@@ -148,7 +148,7 @@ export default class Cadete extends Component {
         <Content style={{flex:1}}>
           <Card style={{alignSelf: 'center', marginTop: 100, flex:1}}>
             <CardItem  style={{flex:1}}>
-              <Text style={{fontSize:20, alignSelf: 'stretch'}}>No hay pedidos 🙂</Text>
+              <Text style={{fontSize:20, alignSelf: 'stretch'}}>No hay pedidos ðŸ™‚</Text>
             </CardItem>
           </Card>
         </Content>

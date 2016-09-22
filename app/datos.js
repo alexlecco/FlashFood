@@ -35,7 +35,7 @@ const raiz = base.database().ref()
 
 const values = objeto => Object.keys(objeto || []).map(clave => objeto[clave])
 
-const Plurales   = [ [/ci[oó]n$/, 'ciones'], [/z$/, 'ces'], [/([aeiou])$/, '$1s'],]
+const Plurales   = [ [/ci[oÃ³]n$/, 'ciones'], [/z$/, 'ces'], [/([aeiou])$/, '$1s'],]
 const Singulares = [ [/nes$/, 'n'], [/ces$/, 'z'], [/([aeiou])s$/, '$1'],]
 
 String.prototype.plural   = function() { return Plurales.reduce( (tmp, x) => tmp.replace(x[0], x[1]), this) }
@@ -62,11 +62,11 @@ export class Datos {
     }
 
     static referencia(camino) {
-      console.group("DATOS Referencia")
-      console.log("camino      ", camino)
-      console.log("normalizar  ", normalizar(camino))
-      console.log("url         ", url(normalizar(camino)))
-      console.groupEnd()
+      // console.group("DATOS Referencia")
+      // console.log("camino      ", camino)
+      // console.log("normalizar  ", normalizar(camino))
+      // console.log("url         ", url(normalizar(camino)))
+      // console.groupEnd()
       return raiz.child( url( normalizar(camino) ) )
     }
 
@@ -92,7 +92,7 @@ export class Datos {
 
 class Registro {
   static registrar(componente){ this.componente = componente }
-  static setState(nombre, valor){
+  static informar(nombre, valor){
     this.componente && this.componente.setState( {[nombre]: valor} )
   }
 
@@ -121,20 +121,20 @@ class Registro {
 
   static observar(condicion, destino=false){
     const {registro, coleccion} = this
-    destino = destino || esID(condicion) ? registro : coleccion
+    destino = destino ||Â esID(condicion) ? registro : coleccion
 
-    this.setState(destino, false)
+    this.informar(destino, false)
     if(esID(condicion)){
       const id = condicion
       Datos.observar([coleccion, id],
         datos => new this(datos),
-        datos => this.setState(destino, datos)
+        datos => this.informar(destino, datos)
       )
     } else {
       condicion = condicion || (x => true)
       Datos.observar(coleccion,
         datos => datos.map(item => new this(item)),
-        datos => this.setState(destino, datos.filter( condicion ) )
+        datos => this.informar(destino, datos.filter( condicion ) )
       )
     }
   }
@@ -182,7 +182,7 @@ export class Pedido extends Registro {
     get activo(){ return this.estado == Estados.recibido || this.estado == Estados.cancelado }
 
     enPedido(cliente){
-      return this.cliente === cliente && ! this.activo
+      return this.cliente === cliente && !this.activo
     }
 
     enCocina(cocinero){
@@ -202,7 +202,7 @@ export class Pedido extends Registro {
     cambiarEstado(estado){
       if(this.estado != estado){
         this.estado = estado
-        this.historia = this.historia || []
+        this.historia = this.historia ||Â []
         this.historia.push({ estado, hora: new Date().toString() })
       }
       this.escribir()
@@ -231,8 +231,10 @@ export class Pedido extends Registro {
     }
 
     valorar(valoracion){
-      this.valoracion = valoracion
-      this.cambiarEstado(Estados.recibido)
+      if(valoracion >= 0 ||Â valoracion <= 5){
+        this.valoracion = valoracion
+        this.cambiarEstado(Estados.recibido)
+      }
     }
 }
 
@@ -323,7 +325,7 @@ export class Pedido extends Registro {
 //   // static nombre = 'platos'
 //
 //   static convertir(plato){
-//     const detalle = `Descripción larga de ${plato.descripcion} bla bla bla bla bla bla bla bla bla bla bla bla`
+//     const detalle = `DescripciÃ³n larga de ${plato.descripcion} bla bla bla bla bla bla bla bla bla bla bla bla`
 //     return { ...plato, detalle, foto: `https://dl.dropboxusercontent.com/u/1086383/platos/${plato.id}.jpg` }
 //   }
 // }

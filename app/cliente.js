@@ -50,6 +50,7 @@ export default class Cliente extends Component {
     Usuario.observar(cliente)
     Pedido.observar(pedido => pedido.enPedido(cliente))
     Plato.observar(plato => plato.activo)
+
     // this.timer = setInterval( () => this.setState({demora: this.calcularDemoraActual()}), 1000)
     this.timer = setInterval( this.alContar , 1000)
   }
@@ -119,7 +120,7 @@ const RealizarPedido = (props) => {
                   </Col>
                   <Col size={2}>
                     <Text style={styles.plato_precio}> ${plato.precio} </Text>
-                    <Button block onPress={ () => alElegir(plato) }> ¡Pedir Ya! </Button>
+                    <Button block onPress={ () => alElegir(plato) }> Â¡Pedir Ya! </Button>
                   </Col>
                 </Grid>
               </CardItem>
@@ -152,7 +153,7 @@ const Pago = (props) => {
   const {demora, precio} = props
   const esTarde = demora > EsperaMaxima
   const total   = esTarde ? `Hoy comes GRATIS` : `Total a pagar $${precio}`
-  const detalle = esTarde ? 'Lo sentimos... no llegamos a tiempo' : `Si demoramos más de ${humanizeHora(EsperaMaxima - demora)} es GRATIS`
+  const detalle = esTarde ? 'Lo sentimos... no llegamos a tiempo' : `Si demoramos mÃ¡s de ${humanizeHora(EsperaMaxima - demora)} es GRATIS`
   const color   = esTarde ? 'red' : 'blue'
   return (
     <CardItem style={{alignItems:'center'}}>
