@@ -121,7 +121,7 @@ class Registro {
 
   static observar(condicion, destino=false){
     const {registro, coleccion} = this
-    destino = destino ||Â esID(condicion) ? registro : coleccion
+    destino = destino || esID(condicion) ? registro : coleccion
 
     this.informar(destino, false)
     if(esID(condicion)){
@@ -202,7 +202,7 @@ export class Pedido extends Registro {
     cambiarEstado(estado){
       if(this.estado != estado){
         this.estado = estado
-        this.historia = this.historia ||Â []
+        this.historia = this.historia || []
         this.historia.push({ estado, hora: new Date().toString() })
       }
       this.escribir()
@@ -231,7 +231,7 @@ export class Pedido extends Registro {
     }
 
     valorar(valoracion){
-      if(valoracion >= 0 ||Â valoracion <= 5){
+      if(valoracion >= 0 || valoracion <= 5){
         this.valoracion = valoracion
         this.cambiarEstado(Estados.recibido)
       }
