@@ -11,6 +11,9 @@ import {
 } from 'native-base';
 import React, { Component } from 'react';
 import { Image } from 'react-native';
+var Dimensions = require('Dimensions');
+var screenSize = Dimensions.get('window');
+
 
 import {Usuario, Pedido, Plato, Estados, } from './datos'
 const styles = require('./styles.js')
@@ -114,7 +117,7 @@ export default class Cadete extends Component {
         <Col>
           <Text style={styles.pedido_descripcion}> Cocinero: </Text>
           <Text style={styles.pedido_cantidad}>{cocinero.nombre}</Text>
-          <Text style={styles.pedido_descripcion}> DirecciÃ³n: </Text>
+          <Text style={styles.pedido_descripcion}> Dirección: </Text>
           <Text style={styles.pedido_cantidad}>{cocinero.domicilio}</Text>
         </Col>
       </Grid>
@@ -130,7 +133,7 @@ export default class Cadete extends Component {
         <Col>
           <Text style={styles.pedido_descripcion}> Cliente: </Text>
           <Text style={styles.pedido_cantidad}>{cliente.nombre}</Text>
-          <Text style={styles.pedido_descripcion}> DirecciÃ³n: </Text>
+          <Text style={styles.pedido_descripcion}> Dirección: </Text>
           <Text style={styles.pedido_cantidad}>{cliente.domicilio}</Text>
         </Col>
       </Grid>
@@ -145,12 +148,17 @@ export default class Cadete extends Component {
           <Title>Envio</Title>
           <Button transparent onPress={ () => props.alSalir() } ><Icon name='ios-home' /></Button>
         </Header>
-        <Content style={{flex:1}}>
-          <Card style={{alignSelf: 'center', marginTop: 100, flex:1}}>
-            <CardItem  style={{flex:1}}>
-              <Text style={{fontSize:20, alignSelf: 'stretch'}}>No hay pedidos ðŸ™‚</Text>
-            </CardItem>
-          </Card>
+        <Content>
+          <View style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            width: screenSize.width,
+            height: screenSize.height-64,
+            backgroundColor:'red',
+            alignSelf:'center'}}>
+              <Text style={{fontSize:20, alignSelf: 'stretch'}}>No hay pedidos</Text>
+          </View>
         </Content>
       </Container>
   )

@@ -113,7 +113,7 @@ export default class Cocinero extends Component {
                 <Grid>
                   <Col>
                     <Text style={styles.pedido_descripcion}>Esperando</Text>
-                    <Text style={styles.pedido_cantidad}>{estados[Estados.pedido] || "ðŸ˜€"}</Text>
+                    <Text style={styles.pedido_cantidad}>{estados[Estados.pedido] || ""}</Text>
                   </Col>
                   <Col>
                     {estados[Estados.pedido] && <Button onPress={ () => alAceptar(plato) }>Producir</Button>}
@@ -124,7 +124,7 @@ export default class Cocinero extends Component {
                 <Grid>
                   <Col>
                     <Text style={styles.pedido_descripcion}>Cocinado</Text>
-                    <Text style={styles.pedido_cantidad}>{estados[Estados.aceptado] || "ðŸ˜Ÿ"}</Text>
+                    <Text style={styles.pedido_cantidad}>{estados[Estados.aceptado] || ""}</Text>
                   </Col>
                   <Col>
                     {estados[Estados.aceptado] && <Button onPress={ () => alDisponer(plato)}>Entregar</Button>}
@@ -133,7 +133,7 @@ export default class Cocinero extends Component {
               </CardItem>
               <CardItem>
                 <Text style={styles.pedido_descripcion}>Disponible</Text>
-                <Text style={styles.pedido_cantidad}>{estados[Estados.disponible] || "ðŸ™„"}</Text>
+                <Text style={styles.pedido_cantidad}>{estados[Estados.disponible] || ""}</Text>
               </CardItem>
             </Card>
           </Col>

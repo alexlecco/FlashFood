@@ -12,7 +12,11 @@ import {
 
 import React, { Component } from 'react';
 import { Dimensions, Image } from 'react-native';
+
+var screenSize = Dimensions.get('window');
+
 import StarRating from 'react-native-star-rating';
+import {IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator} from 'rn-viewpager';
 
 import { Usuario, Plato, Pedido, Estados } from './datos'
 
@@ -85,7 +89,7 @@ export default class Cliente extends Component {
 
     if(hayPlatos){
       return <RealizarPedido {...this.props} usuario={usuario} platos={platos}
-                  alElegir={ plato => Pedido.pedir(usuario, plato) } />
+                  alElegir={ plato => {Pedido.pedir(usuario, plato); Pedido.pedir(usuario, plato)} } />
     }
 
     return <Cargando />
@@ -101,33 +105,40 @@ const RealizarPedido = (props) => {
         <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
       </Header>
       <Content style={{flex:1}}>
-        <List
-          dataArray={platos}
-          renderRow={ plato =>
-          <ListItem>
-            <Card>
-              <CardItem>
-                <Image source={{uri: plato.foto}}  />
-              </CardItem>
-              <CardItem>
-                <Grid>
-                  <Col size={3}>
-                    <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
-                    <Text style={styles.plato_detalle}> {plato.detalle} </Text>
-                  </Col>
-                  <Col size={2}>
-                    <Text style={styles.plato_precio}> ${plato.precio} </Text>
-                    <Button block onPress={ () => alElegir(plato) }> Â¡Pedir Ya! </Button>
-                  </Col>
-                </Grid>
-              </CardItem>
-            </Card>
-          </ListItem>
-        } />
+        <IndicatorViewPager style={{height: screenSize.height - 64}} indicator={(<Paginador paginas={platos.length} />)} >
+          {platos.map( (plato, indice) => <PaginaProducto plato={plato} alElegir={() => alElegir(plato)} key={indice} /> )}
+        </IndicatorViewPager>
       </Content>
     </Container>
   )
 }
+
+const Paginador = ({paginas}) => <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
+
+const PaginaProducto = ({plato, alElegir}) => (
+  <View style={{width: screenSize.width, height: screenSize.height - 64}}>
+      <Grid>
+        <Row style={{height:screenSize.width}}>
+          <Image source={{uri: plato.foto}} style={{margin: 5, width: screenSize.width-10, height: screenSize.width-10}}  />
+        </Row>
+        <Row>
+          <Grid>
+            <Col size={3}>
+              <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
+              <Text style={styles.plato_detalle}> {plato.detalle} </Text>
+            </Col>
+          </Grid>
+        </Row>
+        <Row>
+          <Button princia onPress={ () => alElegir()} style={{margin: 5, width: screenSize.width-10, height: 64}}>¡Pedir Ya! </Button>
+        </Row>
+      </Grid>
+      <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', top: screenSize.width-60, left: screenSize.width-130, height: 50, width: 120, alignItems: 'center'}}>
+        <Text style={styles.plato_precio}> ${plato.precio} </Text>
+      </View>
+  </View>
+)
+
 
 const Accion = (props) => {
   switch (props.pedido.estado) {
@@ -150,7 +161,7 @@ const Pago = (props) => {
   const {demora, precio} = props
   const esTarde = demora > EsperaMaxima
   const total   = esTarde ? `Hoy comes GRATIS` : `Total a pagar $${precio}`
-  const detalle = esTarde ? 'Lo sentimos... no llegamos a tiempo' : `Si demoramos mÃ¡s de ${humanizeHora(EsperaMaxima - demora)} es GRATIS`
+  const detalle = esTarde ? 'Lo sentimos... no llegamos a tiempo' : `Si demoramos más de ${humanizeHora(EsperaMaxima - demora)} es GRATIS`
   const color   = esTarde ? 'red' : 'blue'
   return (
     <CardItem style={{alignItems:'center'}}>
