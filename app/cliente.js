@@ -89,43 +89,50 @@ export default class Cliente extends Component {
 
     if(hayPlatos){
       return <RealizarPedido {...this.props} usuario={usuario} platos={platos}
-                  alElegir={ plato => {Pedido.pedir(usuario, plato); Pedido.pedir(usuario, plato)} } />
+                  alElegir={ plato => Pedido.pedir(usuario, plato) } />
     }
 
     return <Cargando />
   }
 }
 
-const RealizarPedido = (props) => {
-  const { platos, alElegir, alSalir, usuario } = props
+class RealizarPedido extends Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+  const { platos, alElegir, alSalir, usuario } = this.props
+    return (
+      <Container>
+        <Header>
+          <Title>Realizar pedido ({usuario.id})</Title>
+          <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
+        </Header>
+        <Content style={{flex:1}}>
+          <IndicatorViewPager style={{height: screenSize.height - 64}} indicator={this.paginador(platos.length+1)} >
+            <PaginaPresentacion />
+            {platos.map( (plato, indice) => <PaginaProducto plato={plato} alElegir={() => alElegir(plato)} key={indice} /> )}
+          </IndicatorViewPager>
+        </Content>
+      </Container>
+    )
+  }
+  paginador = (paginas) => <PagerDotIndicator pageCount={paginas} style={{bottom:80}} />
+}
+
+const PaginaPresentacion = (props) => {
   return (
-    <Container>
-      <Header>
-        <Title>Realizar pedido ({usuario.id})</Title>
-        <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-      </Header>
-      <Content style={{flex:1}}>
-        <IndicatorViewPager style={{height: screenSize.height - 64}} indicator={(<Paginador paginas={platos.length+1} />)} >
-          <PaginaPresentacion />
-          {platos.map( (plato, indice) => <PaginaProducto plato={plato} alElegir={() => alElegir(plato)} key={indice} /> )}
-        </IndicatorViewPager>
-      </Content>
-    </Container>
+    <View style={{width: screenSize.width, height: screenSize.height - 64}} removeClippedSubviews={false}>
+      <Grid style={{alignItems:'center'}}>
+        <Row><Text style={{fontSize:50, marginTop: 30}}>El plato del dia</Text></Row>
+        <Row><Text style={{fontSize:20}}>Tu plato en 30 minutos o gratis</Text></Row>
+      </Grid>
+    </View>
   )
 }
 
-const Paginador = ({paginas}) => <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
-
-const PaginaPresentacion = (props) => (
-  <View style={{width: screenSize.width, height: screenSize.height - 64}}>
-    <Grid style={{alignItems:'center'}}>
-      <Row><Text style={{fontSize:50, marginTop: 30}}>El plato del dia</Text></Row>
-      <Row><Text style={{fontSize:20}}>Tu plato en 30 minutos o gratis</Text></Row>
-    </Grid>
-  </View>
-)
 const PaginaProducto = ({plato, alElegir}) => (
-  <View style={{width: screenSize.width, height: screenSize.height - 64}}>
+  <View style={{width: screenSize.width, height: screenSize.height - 64}} removeClippedSubviews={false}>
       <Grid>
         <Row style={{height:screenSize.width}}>
           <Image source={{uri: plato.foto}} style={{margin: 5, width: screenSize.width-10, height: screenSize.width-10}}  />
@@ -139,7 +146,7 @@ const PaginaProducto = ({plato, alElegir}) => (
           </Grid>
         </Row>
         <Row>
-          <Button princia onPress={ () => alElegir()} style={{margin: 5, width: screenSize.width-10, height: 64}}>¡Pedir Ya! </Button>
+          <Button block onPress={ () => alElegir()} style={{margin: 5, width: screenSize.width-10, height: 64}}>¡Pedir Ya! </Button>
         </Row>
       </Grid>
       <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', top: screenSize.width-60, left: screenSize.width-130, height: 50, width: 120, alignItems: 'center'}}>
