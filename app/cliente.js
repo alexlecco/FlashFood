@@ -124,6 +124,7 @@ const PaginaPresentacion = (props) => (
     </Grid>
   </View>
 )
+
 const PaginaProducto = ({plato, alElegir}) => (
   <View style={{width: screenSize.width, height: screenSize.height - 64}}>
       <Grid>

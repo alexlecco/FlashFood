@@ -8,6 +8,8 @@
  */
 
 #import "AppDelegate.h"
+#import <Fabric/Fabric.h>
+#import <DigitsKit/DigitsKit.h>
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
@@ -33,6 +35,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  [Fabric with:@[[Digits class]]];
   return YES;
 }
 

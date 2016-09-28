@@ -8,14 +8,14 @@ import {
   Button, Text, View,
   Spinner, Icon, Badge,
 } from 'native-base';
+
 import React, { Component } from 'react';
 import {  Grid, Row, Col, } from 'react-native-easy-grid';
 
 import { Usuario, Datos } from './datos';
 
-// import Ingresar from './ingresar';
-// import Platos   from './platos';
-// import Usuarios from './usuarios';
+var DigitsAuthenticateButton = require('./DigitsAuthenticateButton');
+
 const styles = require('./styles.js')
 
 import Cliente  from './cliente';
@@ -45,6 +45,19 @@ export default class FlashFood extends Component {
 
   render() {
     const { usuarios, usuario } = this.state
+
+    // return (
+    //   <Container>
+    //     <Header>
+    //       <Title>Ingresar al Sistema</Title>
+    //     </Header>
+    //     <Content>
+    //       <Text>Antes</Text>
+    //         <DigitsAuthenticateButton />
+    //       <Text>Despues</Text>
+    //     </Content>
+    //   </Container>
+    // )
 
     if(!usuarios)  { return <Cargando /> }
 
