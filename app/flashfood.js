@@ -46,19 +46,7 @@ export default class FlashFood extends Component {
   render() {
     const { usuarios, usuario } = this.state
 
-    // return (
-    //   <Container>
-    //     <Header>
-    //       <Title>Ingresar al Sistema</Title>
-    //     </Header>
-    //     <Content>
-    //       <Text>Antes</Text>
-    //         <DigitsAuthenticateButton />
-    //       <Text>Despues</Text>
-    //     </Content>
-    //   </Container>
-    // )
-
+    // return <RegistroInicial />
     if(!usuarios)  { return <Cargando /> }
 
     if(!usuario) { return <ElegirUsuario usuarios={usuarios} alElegir={ usuario => this.alIngresar(usuario)} />}
@@ -71,6 +59,19 @@ export default class FlashFood extends Component {
 }
 
 const Cargando = (props) => <View style={{ flex:1, alignItems: 'stretch' }}><Spinner style={{ flex:1 }} color={ "green" } /></View>
+
+const RegistroInicial = (props) => (
+    <Container>
+      <Header>
+        <Title>Ingresar al Sistema</Title>
+      </Header>
+      <Content>
+        <Text>Antes</Text>
+          <DigitsAuthenticateButton />
+        <Text>Despues</Text>
+      </Content>
+    </Container>
+  )
 
 const ElegirUsuario = (props) => {
   const clientes  = props.usuarios.filter( u => u.esCliente  )
