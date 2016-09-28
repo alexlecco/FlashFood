@@ -105,7 +105,8 @@ const RealizarPedido = (props) => {
         <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
       </Header>
       <Content style={{flex:1}}>
-        <IndicatorViewPager style={{height: screenSize.height - 64}} indicator={(<Paginador paginas={platos.length} />)} >
+        <IndicatorViewPager style={{height: screenSize.height - 64}} indicator={(<Paginador paginas={platos.length+1} />)} >
+          <PaginaPresentacion />
           {platos.map( (plato, indice) => <PaginaProducto plato={plato} alElegir={() => alElegir(plato)} key={indice} /> )}
         </IndicatorViewPager>
       </Content>
@@ -115,6 +116,14 @@ const RealizarPedido = (props) => {
 
 const Paginador = ({paginas}) => <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
 
+const PaginaPresentacion = (props) => (
+  <View style={{width: screenSize.width, height: screenSize.height - 64}}>
+    <Grid style={{alignItems:'center'}}>
+      <Row><Text style={{fontSize:50, marginTop: 30}}>El plato del dia</Text></Row>
+      <Row><Text style={{fontSize:20}}>Tu plato en 30 minutos o gratis</Text></Row>
+    </Grid>
+  </View>
+)
 const PaginaProducto = ({plato, alElegir}) => (
   <View style={{width: screenSize.width, height: screenSize.height - 64}}>
       <Grid>
