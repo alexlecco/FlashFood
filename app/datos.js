@@ -62,6 +62,10 @@ export class Datos {
       this.cargarUsuarios()
     }
 
+    static borrarPedidos(){
+      raiz.child('pedidos').set(null)
+    }
+    
     static referencia(camino) {
       return raiz.child( url( normalizar(camino) ) )
     }

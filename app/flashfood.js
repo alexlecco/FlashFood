@@ -18,6 +18,7 @@ import { Usuario, Datos } from './datos';
 
 const styles = require('./styles.js')
 import { Pantalla } from './pantalla';
+import Acciones from './acciones';
 
 import Cliente  from './cliente';
 import Cadete   from './cadete';
@@ -73,13 +74,19 @@ const RegistroInicial = (props) => (
         <Text>Despues</Text>
       </Content>
     </Container>
-  )
+)
+
+const ejecutarAccion = (accion) => {
+  if(accion==0){ Datos.cargarPlatos() }
+  if(accion==1){ Datos.cargarUsuarios() }
+  if(accion==2){ Datos.borrarPedidos() }
+}
 
 const ElegirUsuario = (props) => {
   const clientes  = props.usuarios.filter( u => u.esCliente  )
   const cocineros = props.usuarios.filter( u => u.esCocinero )
   const cadetes   = props.usuarios.filter( u => u.esCadete )
-
+  const { alEjecutar } = props
   return (
     <Container>
       <Header>
@@ -91,10 +98,7 @@ const ElegirUsuario = (props) => {
         <ListarUsuarios titulo="Cadetes"   {...props} usuarios={cadetes} />
       </Content>
       <Footer>
-        <Grid>
-          <Col><Button block style={{marginTop:Pantalla.margen, marginLeft: Pantalla.margen, marginBottom: Pantalla.margen, marginRight: Pantalla.separacion}} onPress={() => Datos.cargarPlatos()}>Cargar Platos</Button></Col>
-          <Col><Button block style={{marginTop:Pantalla.margen, marginBottom: Pantalla.margen, marginRight: Pantalla.margen}} onPress={() => Datos.cargarUsuarios()}>Cargar Usuarios</Button></Col>
-        </Grid>
+        <Acciones titulos={["+ Platos", "+ Usuarios", "- Pedidos"]} alElegir={(nroAccion) => ejecutarAccion(nroAccion)} />
       </Footer>
     </Container>
   )
