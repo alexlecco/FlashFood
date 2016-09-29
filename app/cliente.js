@@ -19,7 +19,7 @@ import { Usuario, Plato, Pedido, Estados } from './datos'
 import { Image } from 'react-native';
 
 import { Pantalla } from './pantalla';
-const styles = require('./styles.js')
+const styles = require('./styles.js');
 
 const humanizeHora = (segundos) => {
   segundos = Math.floor(segundos)
@@ -147,9 +147,6 @@ class PaginaPresentacion extends Component {
 class PaginaProducto extends Component {
   render(){
     const {plato, alElegir} = this.props
-    console.log("PLATO", plato)
-    console.log("ALELEGIR", alElegir)
-    console.log("Pantalla...", Pantalla.contenido)
     return (
       <View style={Pantalla.contenido}>
         <View style={{margin: Pantalla.separacion}}>

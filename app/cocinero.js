@@ -14,6 +14,8 @@ import React, { Component } from 'react';
 import { Image } from 'react-native';
 
 import {Usuario, Plato, Pedido, Estados} from './datos'
+
+import { Pantalla } from './pantalla';
 const styles = require('./styles.js')
 
 export default class Cocinero extends Component {

@@ -11,12 +11,12 @@ import {
 } from 'native-base';
 import React, { Component } from 'react';
 import { Image } from 'react-native';
-var Dimensions = require('Dimensions');
-var screenSize = Dimensions.get('window');
+
 
 
 import {Usuario, Pedido, Plato, Estados, } from './datos'
 const styles = require('./styles.js')
+import { Pantalla } from './pantalla';
 
 export default class Cadete extends Component {
     constructor(props){
@@ -153,8 +153,8 @@ export default class Cadete extends Component {
             position: 'absolute',
             left: 0,
             top: 0,
-            width: screenSize.width,
-            height: screenSize.height-64,
+            width: Pantalla.ancho,
+            height: Pantalla.alto,
             backgroundColor:'red',
             alignSelf:'center'}}>
               <Text style={{fontSize:20, alignSelf: 'stretch'}}>No hay pedidos</Text>
