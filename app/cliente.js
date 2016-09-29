@@ -149,11 +149,10 @@ class PaginaProducto extends Component {
     const {plato, alElegir} = this.props
     return (
       <View style={Pantalla.contenido}>
-        <View style={{margin: Pantalla.separacion}}>
         <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)} >
           <Precio precio={plato.precio} />
         </Image>
-
+        <View style={{margin: Pantalla.separacion}}>
             <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
             <Text style={styles.plato_detalle}> {plato.detalle} </Text>
         </View>
