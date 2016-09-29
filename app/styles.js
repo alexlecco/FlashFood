@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
   plato_precio: {
     fontSize: 40,
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     height: 50,
     paddingTop: 30,
   },

@@ -11,9 +11,7 @@ import {
 } from 'native-base';
 
 import React, { Component } from 'react';
-import { Dimensions, Image } from 'react-native';
-
-var screenSize = Dimensions.get('window');
+import { Dimensions, Platform, Image } from 'react-native';
 
 import StarRating from 'react-native-star-rating';
 import {IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator} from 'rn-viewpager';
@@ -32,8 +30,26 @@ const humanizeHora = (segundos) => {
 
 const EsperaMaxima = 30 * 60 // 30 minutos o GRATIS
 
-export default class Cliente extends Component {
+class Pantalla {
+  static get size(){ return Dimensions.get('window') }
 
+  static get navegacion(){ return Platform.OS === 'ios' ? 64 : 85  }
+  static get pie(){ return 64 }
+
+  static get margen(){return 10}
+  static get separacion(){ return 5}
+
+  static get ancho(){return this.size.width - 2 * this.margen }
+  static get alto(){return this.size.height - 2 * this.margen - this.navegacion  }
+
+  static get pagina(){ return {width: this.size.width, height: this.size.height - this.navegacion}}
+  static get contenido(){ return {position: 'absolute', left: this.margen, top: this.margen, width: this.ancho, height: this.alto}}
+
+  static get accion(){ return {position: 'absolute', left: 0, bottom: 0, right: 0, height: this.pie} }
+  static imagen(relacion = 1.0){ return {width: this.ancho, height: this.ancho / relacion }}
+}
+
+export default class Cliente extends Component {
   constructor(props){
     super(props)
     this.state = { usuario: false, platos: false, pedidos: false}
@@ -56,7 +72,7 @@ export default class Cliente extends Component {
     Plato.observar(plato => plato.activo)
 
     // this.timer = setInterval( () => this.setState({demora: this.calcularDemoraActual()}), 1000)
-    this.timer = setInterval( this.alContar , 1000)
+    // this.timer = setInterval( this.alContar , 1000)
   }
 
   componentWillUnmount(){
@@ -82,134 +98,184 @@ export default class Cliente extends Component {
       var pedido = pedidos[0]
       var plato  = platos.find(plato => plato.id === pedido.plato)
 
-      return <SeguirPedido {...this.props} usuario={usuario} pedido={pedido} plato={plato}
+      return <PaginaSeguimiento {...this.props}
+                  usuario={usuario}
+                  pedido={pedido}
+                  plato={plato}
                   alCancelar ={ () => pedido.cancelar() }
                   alValorar  ={ valoracion => pedido.valorar(valoracion) } />
     }
 
     if(hayPlatos){
-      return <RealizarPedido {...this.props} usuario={usuario} platos={platos}
-                  alElegir={ plato => {Pedido.pedir(usuario, plato); Pedido.pedir(usuario, plato)} } />
+      return <RealizarPedido {...this.props}
+                  usuario={usuario}
+                  platos={platos}
+                  alElegir={ plato => Pedido.pedir(usuario, plato) } />
     }
 
     return <Cargando />
   }
 }
 
-const RealizarPedido = (props) => {
-  const { platos, alElegir, alSalir, usuario } = props
-  return (
-    <Container>
-      <Header>
-        <Title>Realizar pedido ({usuario.id})</Title>
-        <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-      </Header>
-      <Content style={{flex:1}}>
-        <IndicatorViewPager style={{height: screenSize.height - 64}} indicator={(<Paginador paginas={platos.length+1} />)} >
-          <PaginaPresentacion />
-          {platos.map( (plato, indice) => <PaginaProducto plato={plato} alElegir={() => alElegir(plato)} key={indice} /> )}
-        </IndicatorViewPager>
-      </Content>
-    </Container>
-  )
+class RealizarPedido extends Component {
+  render(){
+    const { platos, alElegir, alSalir, usuario } = this.props
+    console.log("REALIZAR_PEDIDO","Pantalla.pagina", Pantalla.pagina)
+    return (
+      <Container>
+        <Header>
+          <Title>Realizar pedido ({usuario.id})</Title>
+          <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
+        </Header>
+        <Content>
+          <IndicatorViewPager style={Pantalla.pagina} indicator={<Paginador paginas={platos.length+1} />} >
+            <View><PaginaPresentacion /></View>
+            {platos.map( (plato, indice) => <View key={indice}><PaginaProducto plato={plato} alElegir={() => alElegir(plato)}/></View> )}
+          </IndicatorViewPager>
+        </Content>
+      </Container>
+    )
+  }
 }
 
-const Paginador = ({paginas}) => <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
+class Paginador extends Component {
+  render(){
+      const {paginas} = this.props
+      return <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
+  }
+}
 
-const PaginaPresentacion = (props) => (
-  <View style={{width: screenSize.width, height: screenSize.height - 64}}>
-    <Grid style={{alignItems:'center'}}>
-      <Row><Text style={{fontSize:50, marginTop: 30}}>El plato del dia</Text></Row>
-      <Row><Text style={{fontSize:20}}>Tu plato en 30 minutos o gratis</Text></Row>
-    </Grid>
-  </View>
-)
-
-const PaginaProducto = ({plato, alElegir}) => (
-  <View style={{width: screenSize.width, height: screenSize.height - 64}}>
-      <Grid>
-        <Row style={{height:screenSize.width}}>
-          <Image source={{uri: plato.foto}} style={{margin: 5, width: screenSize.width-10, height: screenSize.width-10}}  />
-        </Row>
-        <Row>
-          <Grid>
-            <Col size={3}>
-              <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
-              <Text style={styles.plato_detalle}> {plato.detalle} </Text>
-            </Col>
-          </Grid>
-        </Row>
-        <Row>
-          <Button princia onPress={ () => alElegir()} style={{margin: 5, width: screenSize.width-10, height: 64}}>¡Pedir Ya! </Button>
-        </Row>
-      </Grid>
-      <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', top: screenSize.width-60, left: screenSize.width-130, height: 50, width: 120, alignItems: 'center'}}>
-        <Text style={styles.plato_precio}> ${plato.precio} </Text>
+class PaginaPresentacion extends Component {
+  render(){
+    return (
+      <View style={[Pantalla.contenido, {flex: 1}]}>
+        <View style={{height: 140, backgroundColor: 'powderblue'}} />
+        <View style={{flex: 1, backgroundColor: 'skyblue', alignItems: 'center'}}>
+          <Text style={{fontSize:30,marginTop:20}}>El plato del dia</Text>
+        </View>
+        <View style={{height: 50, backgroundColor: 'steelblue', alignItems:'center'}}>
+          <Text style={{fontSize:20}}>Tu plato en 30 minutos o gratis</Text>
+         </View>
       </View>
+    )
+  }
+}
+
+class PaginaProducto extends Component {
+  render(){
+    const {plato, alElegir} = this.props
+    return (
+      <View style={Pantalla.contenido}>
+        <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
+          <Precio precio={plato.precio} />
+        </Image>
+        <View style={{margin: Pantalla.separacion}}>
+            <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
+            <Text style={styles.plato_detalle}> {plato.detalle} </Text>
+        </View>
+        <Button onPress={() => alElegir()} style={Pantalla.accion}> ¡Pedir Ya! </Button>
+      </View>
+    )
+  }
+}
+
+const Precio = ({precio}) => (
+  <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', right: Pantalla.separacion, bottom: Pantalla.separacion, height: 50, width: 120, alignItems: 'center'}}>
+    <Text style={styles.plato_precio}>${precio}</Text>
   </View>
 )
-
 
 const Accion = (props) => {
   switch (props.pedido.estado) {
     case Estados.pedido:
-        return (<Button block style={{alignSelf: 'center', width: 400}} onPress={ () => props.alCancelar( props.pedido) }>
+        return (<Button block style={Pantalla.accion} onPress={ () => props.alCancelar( props.pedido) }>
                    <Icon name='ios-close-circle' /> Cancelar!
                 </Button>)
     case Estados.retirado:
-        return (<Text style={{fontSize: 20}}>Esta en camino. Salio {humanizeHora(30*60-props.pedido.demora)}</Text>)
+        return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Esta en camino. Salio {humanizeHora(30*60-props.pedido.demora)}</Text>)
     case Estados.entregado:
-        return (<StarRating rating={props.pedido.valoracion} selectedStar={ valoracion => props.alValorar(valoracion)} />)
+        return (<StarRating style={Pantalla.accion} rating={props.pedido.valoracion} selectedStar={ valoracion => props.alValorar(valoracion)} />)
     case Estados.cancelado:
         return false
     default:
-        return (<Text style={{fontSize: 20}}>Esperando... {humanizeHora(30*60-props.pedido.demora)}</Text>)
+        return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Esperando... {humanizeHora(30*60-props.pedido.demora)}</Text>)
   }
 }
 
-const Pago = (props) => {
-  const {demora, precio} = props
-  const esTarde = demora > EsperaMaxima
-  const total   = esTarde ? `Hoy comes GRATIS` : `Total a pagar $${precio}`
-  const detalle = esTarde ? 'Lo sentimos... no llegamos a tiempo' : `Si demoramos más de ${humanizeHora(EsperaMaxima - demora)} es GRATIS`
-  const color   = esTarde ? 'red' : 'blue'
-  return (
-    <CardItem style={{alignItems:'center'}}>
-      <Text style={{fontSize: 24, color, fontWeight: 'bold', marginTop:10}}>{total}</Text>
-      <Text style={{fontSize: 10, color: 'gray'}}>{detalle}</Text>
-    </CardItem>
-  )
+class Pago extends Component {
+  render(){
+    const {demora, precio} = this.props
+    const esTarde = demora > EsperaMaxima
+    const total   = esTarde ? `Hoy comes GRATIS` : `Total a pagar $${precio}`
+    const detalle = esTarde ? 'Lo sentimos... no llegamos a tiempo' : `Si demoramos más de ${humanizeHora(EsperaMaxima - demora)} es GRATIS`
+    const color   = esTarde ? 'red' : 'blue'
+    return (
+      <CardItem style={{alignItems:'center'}}>
+        <Text style={{fontSize: 24, color, fontWeight: 'bold', marginTop:10}}>{total}</Text>
+        <Text style={{fontSize: 10, color: 'gray'}}>{detalle}</Text>
+      </CardItem>
+    )
+  }
 }
 
-const SeguirPedido = (props) => {
-  const { pedido, plato,  alCancelar, alValorar, alSalir, usuario } = props
-  const { cadete, estado, cliente } = pedido
+class PaginaSeguimiento extends Component {
+  render(){
+    const { pedido, plato,  alCancelar, alValorar, alSalir, usuario } = this.props
+    const { cadete, estado, cliente } = pedido
+    return (
+      <Container>
+          <Header>
+            <Title>Seguimiento ({usuario.id})</Title>
+            <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
+          </Header>
+        <Content>
+          <View style={Pantalla.contenido}>
+            <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
+              <Precio precio={plato.precio} />
+            </Image>
+            <View style={{margin: Pantalla.separacion}}>
+                <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
+                <Text style={styles.plato_detalle}> {plato.detalle} </Text>
+            </View>
+            <Accion {...this.props} pedido={pedido} />
+          </View>
+        </Content>
+      </Container>
+    )
+  }
+}
 
-  return (
-    <Container>
-        <Header>
-          <Title>Seguimiento ({usuario.id})</Title>
-          <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-        </Header>
-      <Content>
-        <Card style={{margin: 10}}>
-            <CardItem header>
-              <Text style={styles.plato_descripcion}>  {plato.descripcion} </Text>
-            </CardItem>
-            <CardItem>
-              <Image source={{uri: plato.foto}} />
-            </CardItem>
-            <Pago precio={plato.precio} demora={pedido.demora} />
-            <CardItem>
-              <Text note>Estado actual: {pedido.estado} demora: {humanizeHora(pedido.demora)}</Text>
-            </CardItem>
-        </Card>
-      </Content>
-      <Footer style={{backgroundColor: 'lightskyblue'}}>
-        <Accion {...props} pedido={pedido} />
-      </Footer>
-    </Container>
-  )
+class SeguirPedido extends Component {
+  render(){
+    const { pedido, plato,  alCancelar, alValorar, alSalir, usuario } = this.props
+    const { cadete, estado, cliente } = pedido
+
+    return (
+      <Container>
+          <Header>
+            <Title>Seguimiento ({usuario.id})</Title>
+            <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
+          </Header>
+        <Content>
+          <Card style={{margin: 10}}>
+              <CardItem header>
+                <Text style={styles.plato_descripcion}>  {plato.descripcion} </Text>
+              </CardItem>
+              <CardItem>
+                <Image source={{uri: plato.foto}} />
+              </CardItem>
+              <Pago precio={plato.precio} demora={pedido.demora} />
+              <CardItem>
+                <Text note>Estado actual: {pedido.estado} demora: {humanizeHora(pedido.demora)}</Text>
+              </CardItem>
+          </Card>
+        </Content>
+        <Footer style={{backgroundColor: 'lightskyblue'}}>
+          <Accion {...this.props} pedido={pedido} />
+        </Footer>
+      </Container>
+    )
+  }
 }
 
 const Cargando = (props) => <View style={{flex:1, alignItems: 'stretch'}}><Spinner style={{flex:1}} color={"red"} /></View>
