@@ -46,17 +46,23 @@ const esColeccion = camino => normalizar(camino).length == 1
 // const esValor     = camino => normalizar(camino).length == 3
 
 export class Datos {
-    static cargar(){
+
+    static cargarPlatos(){
       const datos = require('./datos.json')
-      raiz.set(datos)
+      raiz.child('platos').set(datos.platos)
+    }
+
+    static cargarUsuarios(){
+      const datos = require('./datos.json')
+      raiz.child('usuarios').set(datos.usuarios)
+    }
+
+    static cargar(){
+      this.cargarPlatos()
+      this.cargarUsuarios()
     }
 
     static referencia(camino) {
-      // console.group("DATOS Referencia")
-      // console.log("camino      ", camino)
-      // console.log("normalizar  ", normalizar(camino))
-      // console.log("url         ", url(normalizar(camino)))
-      // console.groupEnd()
       return raiz.child( url( normalizar(camino) ) )
     }
 

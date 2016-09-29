@@ -107,7 +107,7 @@ class RealizarPedido extends Component {
     return (
       <Container>
         <Header>
-          <Title>Realizar pedido ({usuario.id})</Title>
+          <Title>Realizar pedido</Title>
           <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
         </Header>
         <Content>
@@ -216,7 +216,7 @@ class PaginaSeguimiento extends Component {
             <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
               <Precio precio={plato.precio} />
             </Image>
-            <View style={{margin: Pantalla.separacion}}>
+            <View style={{marginTop: Pantalla.separacion}}>
                 <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
                 <Text style={styles.plato_detalle}> {plato.detalle} </Text>
             </View>

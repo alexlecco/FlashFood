@@ -1,7 +1,7 @@
 'use strict';
 
 import {
-  Container, Header, Title, Content, Footer,
+  Container, Header, Title, Subtitle, Content, Footer,
   List, ListItem,
   Card, CardItem,
   Thumbnail,
@@ -14,9 +14,10 @@ import {  Grid, Row, Col, } from 'react-native-easy-grid';
 
 import { Usuario, Datos } from './datos';
 
-var DigitsAuthenticateButton = require('./DigitsAuthenticateButton');
+// var DigitsAuthenticateButton = require('./DigitsAuthenticateButton');
 
 const styles = require('./styles.js')
+import { Pantalla } from './pantalla';
 
 import Cliente  from './cliente';
 import Cadete   from './cadete';
@@ -26,7 +27,8 @@ export default class FlashFood extends Component {
 
   constructor (props){
     super(props)
-    // Datos.cargar()
+
+    // Datos.cargarPlatos()
     this.state = { usuarios: false, usuario: false }
     Usuario.registrar(this)
   }
@@ -81,13 +83,19 @@ const ElegirUsuario = (props) => {
   return (
     <Container>
       <Header>
-        <Title>Ingresar al Sistema</Title>
+        <Title>El Plato del Día - Administración</Title>
       </Header>
       <Content>
         <ListarUsuarios titulo="Clientes"  {...props} usuarios={clientes} />
         <ListarUsuarios titulo="Cocineros" {...props} usuarios={cocineros} />
         <ListarUsuarios titulo="Cadetes"   {...props} usuarios={cadetes} />
       </Content>
+      <Footer>
+        <Grid>
+          <Col><Button block style={{marginTop:Pantalla.margen, marginLeft: Pantalla.margen, marginBottom: Pantalla.margen, marginRight: Pantalla.separacion}} onPress={() => Datos.cargarPlatos()}>Cargar Platos</Button></Col>
+          <Col><Button block style={{marginTop:Pantalla.margen, marginBottom: Pantalla.margen, marginRight: Pantalla.margen}} onPress={() => Datos.cargarUsuarios()}>Cargar Usuarios</Button></Col>
+        </Grid>
+      </Footer>
     </Container>
   )
 }

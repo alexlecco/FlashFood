@@ -84,9 +84,16 @@
       precio: 84.00,
       activo: false,
     },
+
     pla015: {
       id: "pla015",
       descripcion: "Lomo furioso",
+      precio: 86.00,
+      activo: false,
+    },
+    pla016: {
+      id: "pla016",
+      descripcion: "Lomo Tranquilo",
       precio: 86.00,
       activo: false,
     },
