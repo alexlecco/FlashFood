@@ -11,13 +11,14 @@ import {
 } from 'native-base';
 
 import React, { Component } from 'react';
-import { Dimensions, Platform, Image } from 'react-native';
 
 import StarRating from 'react-native-star-rating';
-import {IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator} from 'rn-viewpager';
+import { IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
 
 import { Usuario, Plato, Pedido, Estados } from './datos'
+import { Image } from 'react-native';
 
+import { Pantalla } from './pantalla';
 const styles = require('./styles.js')
 
 const humanizeHora = (segundos) => {
@@ -29,25 +30,6 @@ const humanizeHora = (segundos) => {
 }
 
 const EsperaMaxima = 30 * 60 // 30 minutos o GRATIS
-
-class Pantalla {
-  static get size(){ return Dimensions.get('window') }
-
-  static get navegacion(){ return Platform.OS === 'ios' ? 64 : 85  }
-  static get pie(){ return 64 }
-
-  static get margen(){return 10}
-  static get separacion(){ return 5}
-
-  static get ancho(){return this.size.width - 2 * this.margen }
-  static get alto(){return this.size.height - 2 * this.margen - this.navegacion  }
-
-  static get pagina(){ return {width: this.size.width, height: this.size.height - this.navegacion}}
-  static get contenido(){ return {position: 'absolute', left: this.margen, top: this.margen, width: this.ancho, height: this.alto}}
-
-  static get accion(){ return {position: 'absolute', left: 0, bottom: 0, right: 0, height: this.pie} }
-  static imagen(relacion = 1.0){ return {width: this.ancho, height: this.ancho / relacion }}
-}
 
 export default class Cliente extends Component {
   constructor(props){
@@ -89,6 +71,7 @@ export default class Cliente extends Component {
     console.log(    "hayUsuario ", !!usuario)
     console.log(    "hayPlatos  ", !!platos,  platos  && platos.length)
     console.log(    "hayPedidos ", !!pedidos, pedidos && pedidos.length, pedidos && pedidos[0])
+    console.log("Pantalla", Pantalla.pagina )
 
     const hayDatos   = usuario && platos && pedidos
     const hayPlatos  = platos  && platos.length  > 0
@@ -164,12 +147,16 @@ class PaginaPresentacion extends Component {
 class PaginaProducto extends Component {
   render(){
     const {plato, alElegir} = this.props
+    console.log("PLATO", plato)
+    console.log("ALELEGIR", alElegir)
+    console.log("Pantalla...", Pantalla.contenido)
     return (
       <View style={Pantalla.contenido}>
-        <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
+        <View style={{margin: Pantalla.separacion}}>
+        <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)} >
           <Precio precio={plato.precio} />
         </Image>
-        <View style={{margin: Pantalla.separacion}}>
+
             <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
             <Text style={styles.plato_detalle}> {plato.detalle} </Text>
         </View>
