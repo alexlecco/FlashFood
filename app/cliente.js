@@ -90,6 +90,7 @@ export default class Cliente extends Component {
     }
 
     if(hayPlatos){
+
       return <RealizarPedido {...this.props}
                   usuario={usuario}
                   platos={platos}
@@ -111,7 +112,9 @@ class RealizarPedido extends Component {
           <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
         </Header>
         <Content>
-          <IndicatorViewPager style={Pantalla.pagina} indicator={<Paginador paginas={platos.length+1} />} >
+          <IndicatorViewPager
+              style={Pantalla.pagina}
+              indicator={ this.generarPuntos(platos.length+1) }>
             <View><PaginaPresentacion /></View>
             {platos.map( (plato, indice) => <View key={indice}><PaginaProducto plato={plato} alElegir={() => alElegir(plato)}/></View> )}
           </IndicatorViewPager>
@@ -119,6 +122,11 @@ class RealizarPedido extends Component {
       </Container>
     )
   }
+
+  generarPuntos(paginas){
+    return <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
+  }
+
 }
 
 class Paginador extends Component {
@@ -131,13 +139,13 @@ class Paginador extends Component {
 class PaginaPresentacion extends Component {
   render(){
     return (
-      <View style={[Pantalla.contenido, {flex: 1}]}>
+      <View style={Pantalla.contenido}>
         <View style={{height: 140, backgroundColor: 'powderblue'}} />
         <View style={{flex: 1, backgroundColor: 'skyblue', alignItems: 'center'}}>
-          <Text style={{fontSize:30,marginTop:20}}>El plato del dia</Text>
+          <Text style={{fontSize:30, marginTop:20, height:100,color:'red'}}>El plato del dia</Text>
         </View>
         <View style={{height: 50, backgroundColor: 'steelblue', alignItems:'center'}}>
-          <Text style={{fontSize:20}}>Tu plato en 30 minutos o gratis</Text>
+          <Text style={{fontSize: 20}}>Tu plato en 30 minutos o gratis</Text>
          </View>
       </View>
     )
@@ -152,7 +160,7 @@ class PaginaProducto extends Component {
         <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)} >
           <Precio precio={plato.precio} />
         </Image>
-        <View style={{margin: Pantalla.separacion}}>
+        <View style={{marginTop: Pantalla.separacion}}>
             <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
             <Text style={styles.plato_detalle}> {plato.detalle} </Text>
         </View>

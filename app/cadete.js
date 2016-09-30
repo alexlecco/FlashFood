@@ -12,8 +12,6 @@ import {
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 
-
-
 import {Usuario, Pedido, Plato, Estados, } from './datos'
 const styles = require('./styles.js')
 import { Pantalla } from './pantalla';
@@ -78,7 +76,6 @@ export default class Cadete extends Component {
   const Envio = (props) => {
     const { pedido, plato, cliente, cocinero, alElegir, alSalir } = props
 
-    console.log("ENVIO plato", pedido)
     const accion = pedido.estado === Estados.disponible ? 'Retirar ya!' : 'Entregar ya!'
     return (
       <Container>
@@ -86,27 +83,29 @@ export default class Cadete extends Component {
           <Title>Envio</Title>
           <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
         </Header>
-        <Content style={{flex:1}}>
-          <Card style={{margin: 10}}>
-            <CardItem header>
-              <H1>{accion}</H1>
-            </CardItem>
-            <CardItem style={{flex:2}}>
-              <Image source={{uri: plato.foto}} style={{width:340, height: 340/(4/3), alignSelf: 'center'}} />
-            </CardItem>
-            <CardItem >
-              <Text style={{fontSize: 12, textAlign: 'center'}}>{plato.descripcion}</Text>
-            </CardItem>
+        <Content>
+          <View style={Pantalla.contenido}>
+            <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
+              <Precio precio={plato.precio} />
+            </Image>
+            <View style={{marginTop: Pantalla.separacion}}>
+              <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
+              <Text style={styles.plato_detalle}> {plato.detalle} </Text>
               {pedido.estado === Estados.disponible && <Cocinero {...props} />}
               {pedido.estado === Estados.retirado   && <Cliente  {...props} />}
-          </Card>
+            </View>
+            <Button block style={Pantalla.accion} onPress={ () => alElegir(pedido) }><Text>{accion}</Text></Button>
+          </View>
         </Content>
-        <Footer>
-          <Button block style={{alignSelf: 'center', flex:1}} onPress={ () => alElegir(pedido) }><Text>{accion}</Text></Button>
-        </Footer>
       </Container>
     )
   }
+
+  const Precio = ({precio}) => (
+    <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', right: Pantalla.separacion, bottom: Pantalla.separacion, height: 50, width: 120, alignItems: 'center'}}>
+      <Text style={styles.plato_precio}>${precio}</Text>
+    </View>
+  )
 
   const Cocinero = (props) => {
     const {pedido, cocinero} = props
@@ -149,14 +148,7 @@ export default class Cadete extends Component {
           <Button transparent onPress={ () => props.alSalir() } ><Icon name='ios-home' /></Button>
         </Header>
         <Content>
-          <View style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            width: Pantalla.ancho,
-            height: Pantalla.alto,
-            backgroundColor:'red',
-            alignSelf:'center'}}>
+          <View style={[Pantalla.pagina,{backgroundColor:'red',}]}>
               <Text style={{fontSize:20, alignSelf: 'stretch'}}>No hay pedidos</Text>
           </View>
         </Content>
