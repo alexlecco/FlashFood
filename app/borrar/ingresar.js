@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { Text, View, TouchableHighlight } from 'react-native';
-import { Container, Header, Title, Content, Button, Grid, Row, Col } from 'native-base';
+import { Container, Header, Title, Content, Button, Text, View, Grid, Row, Col } from 'native-base';
+import styles from './styles';
 
 export default function Ingresar(props) {
   const { title, onVerPlatos, onVerUsuarios } = props
@@ -21,5 +21,3 @@ export default function Ingresar(props) {
     </Container>
   );
 }
-
-const styles = require('./styles.js')

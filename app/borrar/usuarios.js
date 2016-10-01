@@ -1,5 +1,8 @@
 'use strict';
 
+import React, { Component } from 'react';
+import { Image } from 'react-native';
+
 import {
   Container, Header, Title, Content,
   Grid, Row, Col,
@@ -9,8 +12,7 @@ import {
   Button, Text, View,
   Tabs,
 } from 'native-base';
-import React, { Component } from 'react';
-import { Image } from 'react-native';
+import styles from './styles';
 
 export default class Usuarios extends Component {
 
@@ -98,8 +100,3 @@ const Listado = (props) => {
       }>
     </List>)
 }
-
-const styles = require('./styles.js')
-
-// <Listado tabLabel="Cadetes"  datos={this.extraerUsuarios(usuarios, "cadete")}  ></Listado>
-// <Listado tabLabel="Cocinero" datos={this.extraerUsuarios(usuarios, "cocinero")}></Listado>

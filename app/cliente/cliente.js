@@ -1,5 +1,8 @@
 'use strict';
 
+import React, { Component } from 'react';
+import { Image } from 'react-native';
+
 import {
   Container, Header, Title, Content, Footer,
   Grid, Col, Row,
@@ -10,16 +13,12 @@ import {
   Spinner, Icon,
 } from 'native-base';
 
-import React, { Component } from 'react';
-
 import StarRating from 'react-native-star-rating';
 import { IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
 
-import { Usuario, Plato, Pedido, Estados } from './datos'
-import { Image } from 'react-native';
-
-import { Pantalla } from './pantalla';
-const styles = require('./styles.js');
+import { Usuario, Plato, Pedido, Estados } from './../datos'
+import styles from './../styles';
+import { Pantalla } from './../pantalla';
 
 const humanizeHora = (segundos) => {
   segundos = Math.floor(segundos)
@@ -40,6 +39,7 @@ export default class Cliente extends Component {
     Usuario.registrar(this)
     Pedido.registrar(this)
     Plato.registrar(this)
+    this.timer = null
   }
 
   alContar = () => {
@@ -47,14 +47,30 @@ export default class Cliente extends Component {
     this.setState({contar: (contar ||0)+1})
   }
 
+  activarReloj(){
+    const {pedidos} = this.state
+    if(pedidos && pedidos[0].enEspera){
+      if(!this.timer){
+        console.log("Activando el reloj")
+        this.timer = setInterval( this.alContar , 1000)
+      }
+    } else {
+      this.detenerReloj()
+    }
+  }
+
+  detenerReloj(){
+    console.log("Desactivando el reloj")
+    clearInterval(this.timer)
+    this.timer = null
+  }
+
   componentDidMount() {
     const cliente = this.props.id
     Usuario.observar(cliente)
     Pedido.observar(pedido => pedido.enPedido(cliente))
     Plato.observar(plato => plato.activo)
-
-    // this.timer = setInterval( () => this.setState({demora: this.calcularDemoraActual()}), 1000)
-    // this.timer = setInterval( this.alContar , 1000)
+    this.activarReloj()
   }
 
   componentWillUnmount(){
@@ -62,7 +78,7 @@ export default class Cliente extends Component {
     usuario && usuario.detener()
     Plato.detener()
     Pedido.detener()
-    clearInterval(this.timer)
+    this.detenerReloj()
   }
 
   render(){
@@ -270,4 +286,5 @@ class SeguirPedido extends Component {
 }
 
 const Cargando = (props) => <View style={{flex:1, alignItems: 'stretch'}}><Spinner style={{flex:1}} color={"red"} /></View>
-console.log("IMPORT: Cliente")
+
+console.log("IMPORT: Cliente v.2")

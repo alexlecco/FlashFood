@@ -1,18 +1,20 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Image } from 'react-native';
+
 import {
   Container, Header, Title, Content,
   Grid, Row, Col,
   List, ListItem,
   Thumbnail,
-  Button,
+  Button, Text, View,
   Card, CardItem,
 } from 'native-base';
 
-export default class Platos extends Component {
+import styles from './styles';
 
+export default class Platos extends Component {
   extraerPlatos(platos){
     const URL = 'https://dl.dropboxusercontent.com/u/1086383/platos/'
 
@@ -83,5 +85,3 @@ export default class Platos extends Component {
     );
   }
 }
-
-const styles = require('./styles.js')

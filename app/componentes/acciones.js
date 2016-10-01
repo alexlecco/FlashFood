@@ -2,9 +2,8 @@
 
 import React, { Component } from 'react';
 import { Grid, Row, Col, Button } from 'native-base';
-// import { } from 'react-native-easy-grid';
 
-import { Pantalla } from './pantalla';
+import { Pantalla } from './../pantalla';
 
 export default class Acciones extends Component {
   ubicar(i){

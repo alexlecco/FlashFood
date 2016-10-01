@@ -65,7 +65,7 @@ export class Datos {
     static borrarPedidos(){
       raiz.child('pedidos').set(null)
     }
-    
+
     static referencia(camino) {
       return raiz.child( url( normalizar(camino) ) )
     }
@@ -158,6 +158,8 @@ export class Plato extends Registro {
 }
 
 export class Pedido extends Registro {
+    static get EsperaMaxima(){ return 30 * 60 } // 30 minutos o GRATIS
+
     get horas(){
       var horas = {}
       values(this.historia).forEach( ({estado, hora}) => horas[estado] = new Date(hora) )
@@ -192,6 +194,10 @@ export class Pedido extends Registro {
 
     enEntrega(cadete){
       return this.estado === Estados.disponible || this.cadete === cadete && this.estado === Estados.retirado
+    }
+
+    get enEspera(){
+      return [Estados.aceptado, Estados.disponible, Estados.retirado].includes(this.estado)
     }
 
     // ACCIONES

@@ -1,28 +1,29 @@
 'use strict';
 
+import React, { Component } from 'react';
+
 import {
   Container, Header, Title, Subtitle, Content, Footer,
   List, ListItem,
   Card, CardItem,
   Thumbnail,
   Button, Text, View,
+  Grid, Row, Col,
   Spinner, Icon, Badge,
 } from 'native-base';
-
-import React, { Component } from 'react';
-import {  Grid, Row, Col, } from 'react-native-easy-grid';
 
 import { Usuario, Datos } from './datos';
 
 // var DigitsAuthenticateButton = require('./DigitsAuthenticateButton');
 
-const styles = require('./styles.js')
+import styles from './styles';
 import { Pantalla } from './pantalla';
-import Acciones from './acciones';
 
-import Cliente  from './cliente';
-import Cadete   from './cadete';
-import Cocinero from './cocinero';
+import Acciones from './componentes/acciones.js';
+
+import Cliente  from './venta/cliente';
+import Cocinero from './cocina/cocinero';
+import Cadete   from './entrega/cadete';
 
 export default class FlashFood extends Component {
 

@@ -1,5 +1,8 @@
 'use strict';
 
+import React, { Component } from 'react';
+import { Image } from 'react-native';
+
 import {
   Container, Header, Title, Content, Footer,
   Grid, Col, Row,
@@ -9,12 +12,11 @@ import {
   Button, Text, View,
   Spinner, Icon, Badge, H1,
 } from 'native-base';
-import React, { Component } from 'react';
-import { Image } from 'react-native';
 
-import {Usuario, Pedido, Plato, Estados, } from './datos'
-const styles = require('./styles.js')
-import { Pantalla } from './pantalla';
+import {Usuario, Pedido, Plato, Estados, } from './../datos'
+
+import styles from './../styles';
+import { Pantalla } from './../pantalla';
 
 export default class Cadete extends Component {
     constructor(props){

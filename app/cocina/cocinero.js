@@ -1,4 +1,6 @@
 'use strict';
+import React, { Component } from 'react';
+import { Image } from 'react-native';
 
 import {
   Container, Header, Title, Content, Footer,
@@ -10,13 +12,10 @@ import {
   Spinner, Icon, Badge,
 } from 'native-base';
 
-import React, { Component } from 'react';
-import { Image } from 'react-native';
 
-import {Usuario, Plato, Pedido, Estados} from './datos'
-
-import { Pantalla } from './pantalla';
-const styles = require('./styles.js')
+import {Usuario, Plato, Pedido, Estados} from './../datos'
+import styles from './../styles';
+import { Pantalla } from './../pantalla';
 
 export default class Cocinero extends Component {
     constructor(props){
