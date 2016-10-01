@@ -16,9 +16,9 @@ import { Usuario, Datos } from './datos';
 
 // var DigitsAuthenticateButton = require('./DigitsAuthenticateButton');
 
-import {Estilos, Pantalla} from './styles';
+import {Estilos, Estilo, Pantalla} from './styles';
 
-console.log("CARGAR ESTILOS", styles, Pantalla)
+console.log("CARGAR ESTILOS", Estilos, Estilo, Pantalla)
 import Acciones from './componentes/acciones.js';
 
 import Cliente  from './venta/cliente';

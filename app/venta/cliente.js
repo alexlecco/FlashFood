@@ -46,14 +46,14 @@ export default class Cliente extends Component {
 
   activarReloj(){
     const {pedidos} = this.state
-    if(pedidos && pedidos[0].enEspera){
+    // if(pedidos && pedidos[0].enEspera){
       if(!this.timer){
         console.log("Activando el reloj")
         this.timer = setInterval( this.alContar , 1000)
       }
-    } else {
-      this.detenerReloj()
-    }
+    // } else {
+    //   this.detenerReloj()
+    // }
   }
 
   detenerReloj(){
@@ -80,11 +80,6 @@ export default class Cliente extends Component {
 
   render(){
     const {usuario, platos, pedidos}  = this.state
-
-    console.log(    "hayUsuario ", !!usuario)
-    console.log(    "hayPlatos  ", !!platos,  platos  && platos.length)
-    console.log(    "hayPedidos ", !!pedidos, pedidos && pedidos.length, pedidos && pedidos[0])
-    console.log("Pantalla", Pantalla.pagina )
 
     const hayDatos   = usuario && platos && pedidos
     const hayPlatos  = platos  && platos.length  > 0
@@ -117,7 +112,7 @@ export default class Cliente extends Component {
 class RealizarPedido extends Component {
   render(){
     const { platos, alElegir, alSalir, usuario } = this.props
-    console.log("REALIZAR_PEDIDO","Pantalla.pagina", Pantalla.pagina)
+
     return (
       <Container>
         <Header>
@@ -214,10 +209,10 @@ class Pago extends Component {
     const detalle = esTarde ? 'Lo sentimos... no llegamos a tiempo' : `Si demoramos más de ${humanizeHora(EsperaMaxima - demora)} es GRATIS`
     const color   = esTarde ? 'red' : 'blue'
     return (
-      <CardItem style={{alignItems:'center'}}>
+      <View style={{alignItems:'center'}}>
         <Text style={{fontSize: 24, color, fontWeight: 'bold', marginTop:10}}>{total}</Text>
         <Text style={{fontSize: 10, color: 'gray'}}>{detalle}</Text>
-      </CardItem>
+      </View>
     )
   }
 }
