@@ -5,9 +5,7 @@ import { Image } from 'react-native';
 
 import {
   Container, Header, Title, Content, Footer,
-  Grid, Col, Row,
   List, ListItem,
-  Card, CardItem,
   Thumbnail,
   Button, Text, View,
   Spinner, Icon,
@@ -18,6 +16,9 @@ import { IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-v
 
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
+
+import { PaginaSeguimiento } from './pagina_seguimiento';
+import { PaginaPedido } from './pagina_pedido';
 
 const humanizeHora = (segundos) => {
   segundos = Math.floor(segundos)
@@ -99,7 +100,7 @@ export default class Cliente extends Component {
 
     if(hayPlatos){
 
-      return <RealizarPedido {...this.props}
+      return <PaginaPedido {...this.props}
                   usuario={usuario}
                   platos={platos}
                   alElegir={ plato => Pedido.pedir(usuario, plato) } />
@@ -109,97 +110,7 @@ export default class Cliente extends Component {
   }
 }
 
-class RealizarPedido extends Component {
-  render(){
-    const { platos, alElegir, alSalir, usuario } = this.props
 
-    return (
-      <Container>
-        <Header>
-          <Title>Realizar pedido</Title>
-          <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-        </Header>
-        <Content>
-          <IndicatorViewPager
-              style={Pantalla.pagina}
-              indicator={ this.generarPuntos(platos.length+1) }>
-            <View><PaginaPresentacion /></View>
-            {platos.map( (plato, indice) => <View key={indice}><PaginaProducto plato={plato} alElegir={() => alElegir(plato)}/></View> )}
-          </IndicatorViewPager>
-        </Content>
-      </Container>
-    )
-  }
-
-  generarPuntos(paginas){
-    return <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
-  }
-
-}
-
-class Paginador extends Component {
-  render(){
-      const {paginas} = this.props
-      return <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
-  }
-}
-
-class PaginaPresentacion extends Component {
-  render(){
-    return (
-      <View style={Pantalla.contenido}>
-        <View style={{height: 140, backgroundColor: 'powderblue'}} />
-        <View style={{flex: 1, backgroundColor: 'skyblue', alignItems: 'center'}}>
-          <Text style={{fontSize:30, marginTop:20, height:100,color:'red'}}>El plato del dia</Text>
-        </View>
-        <View style={{height: 50, backgroundColor: 'steelblue', alignItems:'center'}}>
-          <Text style={{fontSize: 20}}>Tu plato en 30 minutos o gratis</Text>
-         </View>
-      </View>
-    )
-  }
-}
-
-class PaginaProducto extends Component {
-  render(){
-    const {plato, alElegir} = this.props
-    return (
-      <View style={Pantalla.contenido}>
-        <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)} >
-          <Precio precio={plato.precio} />
-        </Image>
-        <View style={{marginTop: Pantalla.separacion}}>
-            <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
-            <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
-        </View>
-        <Button onPress={() => alElegir()} style={Pantalla.accion}> ¡Pedir Ya! </Button>
-      </View>
-    )
-  }
-}
-
-const Precio = ({precio}) => (
-  <View style={Estilo.plato.ubicarPrecio}>
-    <Text style={Estilo.plato.precio}>u$s{precio}</Text>
-  </View>
-)
-
-const Accion = (props) => {
-  switch (props.pedido.estado) {
-    case Estados.pedido:
-        return (<Button block style={Pantalla.accion} onPress={ () => props.alCancelar( props.pedido) }>
-                   <Icon name='ios-close-circle' /> Cancelar!
-                </Button>)
-    case Estados.retirado:
-        return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Esta en camino. Salio {humanizeHora(30*60-props.pedido.demora)}</Text>)
-    case Estados.entregado:
-        return (<StarRating style={Pantalla.accion} rating={props.pedido.valoracion} selectedStar={ valoracion => props.alValorar(valoracion)} />)
-    case Estados.cancelado:
-        return false
-    default:
-        return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Esperando... {humanizeHora(30*60-props.pedido.demora)}</Text>)
-  }
-}
 
 class Pago extends Component {
   render(){
@@ -213,66 +124,6 @@ class Pago extends Component {
         <Text style={{fontSize: 24, color, fontWeight: 'bold', marginTop:10}}>{total}</Text>
         <Text style={{fontSize: 10, color: 'gray'}}>{detalle}</Text>
       </View>
-    )
-  }
-}
-
-class PaginaSeguimiento extends Component {
-  render(){
-    const { pedido, plato,  alCancelar, alValorar, alSalir, usuario } = this.props
-    const { cadete, estado, cliente } = pedido
-    return (
-      <Container>
-          <Header>
-            <Title>Seguimiento ({usuario.id})</Title>
-            <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-          </Header>
-        <Content>
-          <View style={Pantalla.contenido}>
-            <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
-              <Precio precio={plato.precio} />
-            </Image>
-            <View style={{marginTop: Pantalla.separacion}}>
-                <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
-                <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
-            </View>
-            <Accion {...this.props} pedido={pedido} />
-          </View>
-        </Content>
-      </Container>
-    )
-  }
-}
-
-class SeguirPedido extends Component {
-  render(){
-    const { pedido, plato,  alCancelar, alValorar, alSalir, usuario } = this.props
-    const { cadete, estado, cliente } = pedido
-
-    return (
-      <Container>
-          <Header>
-            <Title>Seguimiento ({usuario.id})</Title>
-            <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-          </Header>
-        <Content>
-          <Card style={{margin: 10}}>
-              <CardItem header>
-                <Text style={Estilo.plato.descripcion}>  {plato.descripcion} </Text>
-              </CardItem>
-              <CardItem>
-                <Image source={{uri: plato.foto}} />
-              </CardItem>
-              <Pago precio={plato.precio} demora={pedido.demora} />
-              <CardItem>
-                <Text note>Estado actual: {pedido.estado} demora: {humanizeHora(pedido.demora)}</Text>
-              </CardItem>
-          </Card>
-        </Content>
-        <Footer style={{backgroundColor: 'lightskyblue'}}>
-          <Accion {...this.props} pedido={pedido} />
-        </Footer>
-      </Container>
     )
   }
 }

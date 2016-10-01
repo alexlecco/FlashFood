@@ -7,7 +7,6 @@ import {
   Container, Header, Title, Content, Footer,
   Grid, Col, Row,
   List, ListItem,
-  Card, CardItem,
   Thumbnail,
   Button, Text, View,
   Spinner, Icon, Badge, H1,

@@ -5,10 +5,8 @@ import React, { Component } from 'react';
 import {
   Container, Header, Title, Subtitle, Content, Footer,
   List, ListItem,
-  Card, CardItem,
   Thumbnail,
   Button, Text, View,
-  Grid, Row, Col,
   Spinner, Icon, Badge,
 } from 'native-base';
 
