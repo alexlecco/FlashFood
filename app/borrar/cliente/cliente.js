@@ -17,8 +17,8 @@ import StarRating from 'react-native-star-rating';
 import { IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
 
 import { Usuario, Plato, Pedido, Estados } from './../datos'
-import styles from './../styles';
-import { Pantalla } from './../pantalla';
+import {style, Pantalla, Estilo} from './../styles';
+// import { Pantalla } from './../pantalla';
 
 const humanizeHora = (segundos) => {
   segundos = Math.floor(segundos)
@@ -187,8 +187,8 @@ class PaginaProducto extends Component {
 }
 
 const Precio = ({precio}) => (
-  <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', right: Pantalla.separacion, bottom: Pantalla.separacion, height: 50, width: 120, alignItems: 'center'}}>
-    <Text style={styles.plato_precio}>${precio}</Text>
+  <View style={Estilo.plato.ubicarPrecio}>
+    <Text style={Estilo.plato.precio}>u$s{precio}</Text>
   </View>
 )
 

@@ -2,18 +2,24 @@
 
 import React, {StyleSheet} from 'react-native';
 
-const styles = StyleSheet.create({
+import { Pantalla } from './pantalla';
+console.log("STYLE > Pantalla:", Pantalla)
+
+const Estilos = StyleSheet.create({
+
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+
   contador: {
     fontSize: 100,
     textAlign: 'center',
     margin: 10,
   },
+
   accion: {
 		fontSize: 40,
     textAlign: 'center',
@@ -27,65 +33,82 @@ const styles = StyleSheet.create({
 		backgroundColor: 'red',
 		color: 'yellow',
   },
+
   titulo: {
     fontSize: 40,
     textAlign: 'center',
 		color: 'green',
   },
 
-  usuario_nombre: {
-    fontSize: 20,
-    fontWeight: '500',
-    alignSelf: 'stretch',
-    height: 30
-  },
+});
 
-  usuario_id: {
-    fontSize: 14,
-    fontWeight: '100',
-  },
-
-  plato_descripcion:  {
-    fontSize:20,
-    fontWeight:'bold',
-    height: 25,
-  },
-
-  plato_detalle:  {
-    fontSize:12,
-    height: 40,
-  },
-
-  plato_precio: {
+const Plato = StyleSheet.create({
+  precio: {
+    backgroundColor: 'red',
+    opacity:0.6,
     fontSize: 40,
     fontWeight: 'normal',
-    height: 50,
-    paddingTop: 30,
   },
 
-  plato_imagen: {
+  ubicarPrecio: {
+    position: 'absolute',
+    right: Pantalla.separacion,
+    bottom: 0,
+    height: 50,
+    width: 120,
+    alignItems: 'center'
+  },
+
+  imagen: {
     width: 240,
     height: 180,
   },
 
-  plato_estado: {
+  estado: {
     fontSize: 30,
     textAlign:'center',
     color:'green',
     height: 50,
   },
 
-  pedido_descripcion: {
+  descripcion: {
     fontSize: 10,
     color: 'gray',
   },
 
-  pedido_cantidad: {
+  cantidad: {
     fontSize: 15,
     color: 'blue',
     fontWeight: 'bold',
   },
-
 });
 
-module.exports = styles
+const Pedido = StyleSheet.create({
+  descripcion: {
+    fontSize: 10,
+    color: 'gray',
+  },
+
+  cantidad: {
+    fontSize: 15,
+    color: 'blue',
+    fontWeight: 'bold',
+  },
+});
+
+const Usuario = StyleSheet.create({
+  id: {
+    fontSize: 14,
+    fontWeight: '100',
+  },
+
+  nombre: {
+    fontSize: 20,
+    fontWeight: '500',
+    alignSelf: 'stretch',
+    height: 30
+  },
+});
+
+const Estilo = {plato: Plato, pedido: Pedido, usuario: Usuario};
+export {Estilos, Estilo, Pantalla};

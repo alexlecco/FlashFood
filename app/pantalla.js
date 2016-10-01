@@ -1,6 +1,6 @@
-import { Dimensions, Platform, Image } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
-export class Pantalla {
+class Pantalla {
   static get size(){return Dimensions.get('window')}
 
   static get navegacion(){return Platform.OS === 'ios' ? 64 : 81}
@@ -18,3 +18,6 @@ export class Pantalla {
   static get accion(){return {position: 'absolute', left: 0, bottom: 0, right: 0, height: this.pie}}
   static imagen(relacion = 1.0){return {width: this.ancho, height: this.ancho / relacion}}
 }
+
+console.log("IMPORT > Pantalla > ", Pantalla)
+export {Pantalla}

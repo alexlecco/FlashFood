@@ -16,10 +16,8 @@ import {
 import StarRating from 'react-native-star-rating';
 import { IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
 
-import {Usuario, Pedido, Plato, Estados, } from './../datos'
-
-import { Pantalla } from '../pantalla';
-import styles from '../styles';
+import { Usuario, Pedido, Plato, Estados } from './../datos'
+import { Estilos, Estilo, Pantalla } from './../styles';
 
 const humanizeHora = (segundos) => {
   segundos = Math.floor(segundos)
@@ -28,8 +26,6 @@ const humanizeHora = (segundos) => {
   const h = ((segundos - s - m * 60)/(60*60)) % 24
   return `${h > 0 ? h + 'h ' : ''}${m > 0 ? m + 'm ' : ''}${s > 0 ? s + 's' : ''}`
 }
-
-
 
 export default class Cliente extends Component {
   constructor(props){
@@ -178,8 +174,8 @@ class PaginaProducto extends Component {
           <Precio precio={plato.precio} />
         </Image>
         <View style={{marginTop: Pantalla.separacion}}>
-            <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
-            <Text style={styles.plato_detalle}> {plato.detalle} </Text>
+            <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
+            <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
         </View>
         <Button onPress={() => alElegir()} style={Pantalla.accion}> ¡Pedir Ya! </Button>
       </View>
@@ -188,8 +184,8 @@ class PaginaProducto extends Component {
 }
 
 const Precio = ({precio}) => (
-  <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', right: Pantalla.separacion, bottom: Pantalla.separacion, height: 50, width: 120, alignItems: 'center'}}>
-    <Text style={styles.plato_precio}>${precio}</Text>
+  <View style={Estilo.plato.ubicarPrecio}>
+    <Text style={Estilo.plato.precio}>u$s{precio}</Text>
   </View>
 )
 
@@ -242,8 +238,8 @@ class PaginaSeguimiento extends Component {
               <Precio precio={plato.precio} />
             </Image>
             <View style={{marginTop: Pantalla.separacion}}>
-                <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
-                <Text style={styles.plato_detalle}> {plato.detalle} </Text>
+                <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
+                <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
             </View>
             <Accion {...this.props} pedido={pedido} />
           </View>
@@ -267,7 +263,7 @@ class SeguirPedido extends Component {
         <Content>
           <Card style={{margin: 10}}>
               <CardItem header>
-                <Text style={styles.plato_descripcion}>  {plato.descripcion} </Text>
+                <Text style={Estilo.plato.descripcion}>  {plato.descripcion} </Text>
               </CardItem>
               <CardItem>
                 <Image source={{uri: plato.foto}} />

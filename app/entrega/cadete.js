@@ -13,10 +13,8 @@ import {
   Spinner, Icon, Badge, H1,
 } from 'native-base';
 
-import {Usuario, Pedido, Plato, Estados, } from './../datos'
-
-import styles from './../styles';
-import { Pantalla } from './../pantalla';
+import { Usuario, Pedido, Plato, Estados } from './../datos'
+import { Estilos, Estilo, Pantalla } from './../styles';
 
 export default class Cadete extends Component {
     constructor(props){
@@ -91,8 +89,8 @@ export default class Cadete extends Component {
               <Precio precio={plato.precio} />
             </Image>
             <View style={{marginTop: Pantalla.separacion}}>
-              <Text style={styles.plato_descripcion}> {plato.descripcion} </Text>
-              <Text style={styles.plato_detalle}> {plato.detalle} </Text>
+              <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
+              <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
               {pedido.estado === Estados.disponible && <Cocinero {...props} />}
               {pedido.estado === Estados.retirado   && <Cliente  {...props} />}
             </View>
@@ -105,7 +103,7 @@ export default class Cadete extends Component {
 
   const Precio = ({precio}) => (
     <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', right: Pantalla.separacion, bottom: Pantalla.separacion, height: 50, width: 120, alignItems: 'center'}}>
-      <Text style={styles.plato_precio}>${precio}</Text>
+      <Text style={Estilo.plato.precio}>${precio}</Text>
     </View>
   )
 
@@ -116,10 +114,10 @@ export default class Cadete extends Component {
       <Grid>
         <Col><Thumbnail source={{uri: cocinero.foto}} size={100} /></Col>
         <Col>
-          <Text style={styles.pedido_descripcion}> Cocinero: </Text>
-          <Text style={styles.pedido_cantidad}>{cocinero.nombre}</Text>
-          <Text style={styles.pedido_descripcion}> Dirección: </Text>
-          <Text style={styles.pedido_cantidad}>{cocinero.domicilio}</Text>
+          <Text style={Estilo.pedido.descripcion}> Cocinero: </Text>
+          <Text style={Estilo.pedido.cantidad}>{cocinero.nombre}</Text>
+          <Text style={Estilo.pedido.descripcion}> Dirección: </Text>
+          <Text style={Estilo.pedido.cantidad}>{cocinero.domicilio}</Text>
         </Col>
       </Grid>
     )
@@ -132,10 +130,10 @@ export default class Cadete extends Component {
       <Grid>
         <Col><Thumbnail source={{uri: cliente.foto}} size={100} /></Col>
         <Col>
-          <Text style={styles.pedido_descripcion}> Cliente: </Text>
-          <Text style={styles.pedido_cantidad}>{cliente.nombre}</Text>
-          <Text style={styles.pedido_descripcion}> Dirección: </Text>
-          <Text style={styles.pedido_cantidad}>{cliente.domicilio}</Text>
+          <Text style={Estilo.pedido.descripcion}> Cliente: </Text>
+          <Text style={Estilo.pedido.cantidad}>{cliente.nombre}</Text>
+          <Text style={Estilo.pedido.descripcion}> Dirección: </Text>
+          <Text style={Estilo.pedido.cantidad}>{cliente.domicilio}</Text>
         </Col>
       </Grid>
     )

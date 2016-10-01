@@ -13,9 +13,8 @@ import {
 } from 'native-base';
 
 
-import {Usuario, Plato, Pedido, Estados} from './../datos'
-import styles from './../styles';
-import { Pantalla } from './../pantalla';
+import { Usuario, Pedido, Plato, Estados } from './../datos'
+import { Estilos, Estilo, Pantalla } from './../styles';
 
 export default class Cocinero extends Component {
     constructor(props){
@@ -113,8 +112,8 @@ export default class Cocinero extends Component {
               <CardItem>
                 <Grid>
                   <Col>
-                    <Text style={styles.pedido_descripcion}>Esperando</Text>
-                    <Text style={styles.pedido_cantidad}>{estados[Estados.pedido] || ""}</Text>
+                    <Text style={Estilo.pedido.descripcion}>Esperando</Text>
+                    <Text style={Estilo.pedido.cantidad}>{estados[Estados.pedido] || ""}</Text>
                   </Col>
                   <Col>
                     {estados[Estados.pedido] && <Button onPress={ () => alAceptar(plato) }>Producir</Button>}
@@ -124,8 +123,8 @@ export default class Cocinero extends Component {
               <CardItem>
                 <Grid>
                   <Col>
-                    <Text style={styles.pedido_descripcion}>Cocinado</Text>
-                    <Text style={styles.pedido_cantidad}>{estados[Estados.aceptado] || ""}</Text>
+                    <Text style={Estilo.pedido.descripcion}>Cocinado</Text>
+                    <Text style={Estilo.pedido.cantidad}>{estados[Estados.aceptado] || ""}</Text>
                   </Col>
                   <Col>
                     {estados[Estados.aceptado] && <Button onPress={ () => alDisponer(plato)}>Entregar</Button>}
@@ -133,8 +132,8 @@ export default class Cocinero extends Component {
                 </Grid>
               </CardItem>
               <CardItem>
-                <Text style={styles.pedido_descripcion}>Disponible</Text>
-                <Text style={styles.pedido_cantidad}>{estados[Estados.disponible] || ""}</Text>
+                <Text style={Estilo.pedido.descripcion}>Disponible</Text>
+                <Text style={Estilo.pedido.cantidad}>{estados[Estados.disponible] || ""}</Text>
               </CardItem>
             </Card>
           </Col>

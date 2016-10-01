@@ -16,9 +16,9 @@ import { Usuario, Datos } from './datos';
 
 // var DigitsAuthenticateButton = require('./DigitsAuthenticateButton');
 
-import styles from './styles';
-import { Pantalla } from './pantalla';
+import {Estilos, Pantalla} from './styles';
 
+console.log("CARGAR ESTILOS", styles, Pantalla)
 import Acciones from './componentes/acciones.js';
 
 import Cliente  from './venta/cliente';
@@ -50,7 +50,6 @@ export default class FlashFood extends Component {
   render() {
     const { usuarios, usuario } = this.state
 
-    // return <RegistroInicial />
     if(!usuarios)  { return <Cargando /> }
 
     if(!usuario) { return <ElegirUsuario usuarios={usuarios} alElegir={ usuario => this.alIngresar(usuario)} />}
@@ -63,19 +62,6 @@ export default class FlashFood extends Component {
 }
 
 const Cargando = (props) => <View style={{ flex:1, alignItems: 'stretch' }}><Spinner style={{ flex:1 }} color={ "green" } /></View>
-
-const RegistroInicial = (props) => (
-    <Container>
-      <Header>
-        <Title>Ingresar al Sistema</Title>
-      </Header>
-      <Content>
-        <Text>Antes</Text>
-          <DigitsAuthenticateButton />
-        <Text>Despues</Text>
-      </Content>
-    </Container>
-)
 
 const ejecutarAccion = (accion) => {
   if(accion==0){ Datos.cargarPlatos() }
@@ -114,8 +100,8 @@ const ListarUsuarios = (props) => {
             renderRow={(usuario) =>
               <ListItem style={{ height:80 }} button onPress={() => props.alElegir(usuario)}>
                 <Thumbnail source={{uri: usuario.foto}} size={75} />
-                <Text style={styles.usuario_nombre}>{usuario.nombre}</Text>
-                <Text style={styles.usuario_id}>id:{usuario.id}</Text>
+                <Text style={Estilo.usuario.nombre}>{usuario.nombre}</Text>
+                <Text style={Estilo.usuario.id}>id:{usuario.id}</Text>
               </ListItem>
             }>
       </List>
