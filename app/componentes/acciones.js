@@ -18,11 +18,10 @@ class Acciones extends Component {
     const {titulos, alElegir} = this.props
     return (
        <Grid>
-         {titulos.map( (titulo, index) => (
+         {titulos.map( (titulo, index) => 
            <Col key={index}>
               <Button block style={this.ubicar(index)} onPress={() => alElegir(index)}>{titulo}</Button>
             </Col>
-          )
          )}
        </Grid>
      )

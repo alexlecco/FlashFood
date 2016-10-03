@@ -2,26 +2,20 @@
 
 import React, { Component } from 'react';
 
-import {
-  Container, Header, Title, Subtitle, Content, Footer,
-  List, ListItem,
-  Thumbnail,
-  Button, Text, View,
-  Spinner, Icon, Badge,
-} from 'native-base';
+import { Container, Header, Title, Subtitle, Content, Footer, List, ListItem, Thumbnail, Button, Text, View } from 'native-base';
 
-import { Usuario, Datos } from './datos';
 
 // var DigitsAuthenticateButton = require('./DigitsAuthenticateButton');
 
-import {Estilos, Estilo, Pantalla} from './styles';
+import { Acciones } from './componentes/acciones.js';
+import { Pagina, Contenido, Cargando } from './componentes/pagina';
+import { Estilos, Estilo, Pantalla } from './styles';
+import { Usuario, Datos } from './datos';
 
-console.log("CARGAR ESTILOS", Estilos, Estilo, Pantalla)
-import Acciones from './componentes/acciones.js';
 
-import Cliente  from './venta/cliente';
-import Cocinero from './cocina/cocinero';
-import Cadete   from './entrega/cadete';
+import { Cliente }  from './venta/cliente';
+import { Cocinero } from './cocina/cocinero';
+import { Cadete }   from './entrega/cadete';
 
 export default class FlashFood extends Component {
 
@@ -53,13 +47,13 @@ export default class FlashFood extends Component {
     if(!usuario) { return <ElegirUsuario usuarios={usuarios} alElegir={ usuario => this.alIngresar(usuario)} />}
 
     console.log("RENDER Usuario:", usuario)
-    if(usuario.esCliente ) { return <Cliente  id={usuario.id} alSalir={ () => this.alSalir() }/> }
+    console.log("RENDER Usuarios:", usuarios)
+
+    if(usuario.esCliente ) { console.log("precliente::"); return <Cliente  id={usuario.id} alSalir={ () => this.alSalir() }/> }
     if(usuario.esCocinero) { return <Cocinero id={usuario.id} alSalir={ () => this.alSalir() }/> }
     if(usuario.esCadete)   { return <Cadete   id={usuario.id} alSalir={ () => this.alSalir() }/> }
   }
 }
-
-const Cargando = (props) => <View style={{ flex:1, alignItems: 'stretch' }}><Spinner style={{ flex:1 }} color={ "green" } /></View>
 
 const ejecutarAccion = (accion) => {
   if(accion==0){ Datos.cargarPlatos() }
@@ -72,10 +66,11 @@ const ElegirUsuario = (props) => {
   const cocineros = props.usuarios.filter( u => u.esCocinero )
   const cadetes   = props.usuarios.filter( u => u.esCadete )
   const { alEjecutar } = props
+
   return (
     <Container>
       <Header>
-        <Title>El Plato del Día - Administración</Title>
+        <Title> El Plato del Día - Administración </Title>
       </Header>
       <Content>
         <ListarUsuarios titulo="Clientes"  {...props} usuarios={clientes} />

@@ -24,6 +24,7 @@ class Cliente extends Component {
   constructor(props){
     super(props)
     this.state = { usuario: false, platos: false, pedidos: false}
+    console.log("CONSTRUCTOR EN CLIENTE")
 
     // BINDING
     Usuario.registrar(this)
@@ -118,6 +119,6 @@ class Pago extends Component {
   }
 }
 
-console.log("IMPORT: Cliente v.2")
+console.log("IMPORT: Cliente v.3")
 
 export { Cliente }
