@@ -3,16 +3,9 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 
-import {
-  Container, Header, Title, Content, Footer,
-  Grid, Col, Row,
-  List, ListItem,
-  Thumbnail,
-  Button, Text, View,
-  Spinner, Icon, Badge, H1,
-} from 'native-base';
 
-import { Pagina, Contenido } from './../componentes/pagina';
+
+import { Pagina, Contenido, Cargando } from './../componentes/pagina';
 
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
@@ -122,7 +115,7 @@ class Cadete extends Component {
       </Col>
     </Grid>
 
-  const Cargando = (props) => <View style={{flex:1, alignItems: 'stretch'}}><Spinner style={{flex:1}} color={"blue"} /></View>
+
 
   const Libre = (props) =>
     <Pagina titulo={"Envio"} alSalir={() => props.alSalir()}>

@@ -5,6 +5,7 @@ import { Image } from 'react-native';
 
 import { Container, Header, Title, Content, Footer, Button, Text, View, Spinner, Icon, } from 'native-base';
 
+import { Pagina, Contenido, Cargando } from './../componentes/pagina';
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
 
