@@ -1,9 +1,9 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, } from 'react-native';
 
-
+import { Container, Header, Title, Content, Grid, Col, Row, List, ListItem, Card, CardItem, Button, Text, View, Spinner, Icon, Thumbnail, } from 'native-base';
 
 import { Pagina, Contenido, Cargando } from './../componentes/pagina';
 

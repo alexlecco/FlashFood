@@ -126,16 +126,20 @@ const ItemComanda = ({item: {plato, estados}, alAceptar, alDisponer}) =>
     </Grid>
   </ListItem>
 
-const AdministrarComanda = ({ comanda, cocinero, alSalir }) =>
-  <Container>
-    <Header>
-      <Title>Comanda para {cocinero.id}</Title>
-      <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-    </Header>
-    <Content style={{flex:1}}>
-      <List dataArray={comanda} renderRow={(item) => <ItemComanda {...props} item={item}/>} />
-    </Content>
-  </Container>
+const AdministrarComanda = (props) => {
+  const { comanda, cocinero, alSalir } = props
+  return (
+    <Container>
+      <Header>
+        <Title>Comanda para {cocinero.id}</Title>
+        <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
+      </Header>
+      <Content style={{flex:1}}>
+        <List dataArray={comanda} renderRow={(item) => <ItemComanda {...props} item={item}/>} />
+      </Content>
+    </Container>
+  )
+}
 
 console.log("IMPORT: Cocinero")
 
