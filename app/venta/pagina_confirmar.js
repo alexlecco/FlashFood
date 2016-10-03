@@ -7,6 +7,7 @@ import {
   Container, Header, Title, Content,
   Button, Text, View,
   Icon,
+  List, ListItem, Radio,
 } from 'native-base';
 
 import StarRating from 'react-native-star-rating';
@@ -45,8 +46,9 @@ const Accion = (props) => {
 
 class PaginaConfirmar extends Component {
   render(){
-    const { pedido, plato,  alCancelar, alConfirmar, alSalir, usuario } = this.props
+    const { pedido, plato,  alCancelar, alConfirmar, alSalir, usuario, lugar } = this.props
     const { cadete, estado, cliente } = pedido
+    console.log("PaginasConfirmar", typeof(pedido), pedido.entregarEn)
     return (
       <Pagina titulo="Confirmar" alSalir={() => alSalir() }>
         <Contenido>
@@ -56,6 +58,23 @@ class PaginaConfirmar extends Component {
           <View style={{marginTop: Pantalla.separacion}}>
               <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
               <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
+              <Text> {"\n\n"} ¿Donde queres comer? </Text>
+
+              <List>
+                <ListItem >
+                    <Radio selected={ pedido.lugar === "oficina" } onPress={ () => pedido.entregarEn("oficina") } />
+                    <Text>En la oficina</Text>
+                </ListItem>
+                <ListItem>
+                    <Radio selected={ pedido.lugar === "bar" } onPress={ () => pedido.entregarEn("bar") } />
+                    <Text>En el bar</Text>
+                </ListItem>
+                <ListItem>
+                    <Radio selected={ pedido.lugar === "baño" } onPress={ () => pedido.entregarEn("baño") } />
+                    <Text>En el Baño</Text>
+                </ListItem>
+              </List>
+
           </View>
           <Button block style={Pantalla.accion1} onPress={ () => alCancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>
           <Button block style={Pantalla.accion2} onPress={ () => alConfirmar() }><Icon name='ios-checkmark' /> Confirmar!</Button>

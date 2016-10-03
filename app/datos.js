@@ -183,10 +183,10 @@ export class Pedido extends Registro {
       return pedido && entregado ? (entregado - pedido) / 1000 : null
     }
 
-    get activo(){ return this.estado == Estados.recibido || this.estado == Estados.cancelado }
+    get activo(){ return this.estado != Estados.cancelado && this.estado != Estados.pendiente && this.estado != Estados.recibido }
 
     enPedido(cliente){
-      return this.cliente === cliente && !this.activo
+      return this.cliente === cliente && !(this.estado == Estados.recibido || this.estado == Estados.cancelado)
     }
 
     enCocina(cocinero){
@@ -274,5 +274,10 @@ export class Pedido extends Registro {
         this.platos[0].valoracion = valoracion
         this.cambiarEstado(Estados.recibido)
       }
+    }
+
+    entregarEn(lugar){
+      this.lugar = lugar
+      this.escribir()
     }
 }
