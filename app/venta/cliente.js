@@ -118,9 +118,6 @@ class Pago extends Component {
   }
 }
 
-const Cargando = (props) =>
-  <View style={{flex:1, alignItems: 'stretch'}}><Spinner style={{flex:1}} color={"red"} /></View>
-
 console.log("IMPORT: Cliente v.2")
 
 export { Cliente }

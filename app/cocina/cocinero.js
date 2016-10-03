@@ -4,6 +4,7 @@ import { Image } from 'react-native';
 
 import { Container, Header, Title, Content, Grid, Col, Row, List, ListItem, Card, CardItem, Button, Text, View, Spinner, Icon, } from 'native-base';
 
+import { Pagina, Contenido, Cargando } from './../componentes/pagina';
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
 
@@ -135,8 +136,6 @@ const AdministrarComanda = ({ comanda, cocinero, alSalir }) =>
       <List dataArray={comanda} renderRow={(item) => <ItemComanda {...props} item={item}/>} />
     </Content>
   </Container>
-
-const Cargando = (props) => <View style={{flex:1, alignItems: 'stretch'}}><Spinner style={{flex:1}} color={"blue"} /></View>
 
 console.log("IMPORT: Cocinero")
 
