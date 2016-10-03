@@ -5,8 +5,8 @@ import { Grid, Row, Col, Button } from 'native-base';
 
 import { Pantalla } from './../pantalla';
 
-export default class Acciones extends Component {
-  
+class Acciones extends Component {
+
   ubicar(i){
     const m = Pantalla.margen, s = Pantalla.separacion / 2
     const primero = i == 0
@@ -28,3 +28,5 @@ export default class Acciones extends Component {
      )
    }
 }
+
+export { Acciones };

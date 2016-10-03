@@ -3,14 +3,12 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 
-import {
-  Container, Header, Title, Content, Footer,
-  Button, Text, View,
-  Spinner, Icon,
-} from 'native-base';
+import { Container, Header, Title, Content, Footer, Button, Text, View, Spinner, Icon } from 'native-base';
 
 import StarRating from 'react-native-star-rating';
 import { IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
+
+import { Paginas, Pagina, Contenido } from './../componentes/pagina';
 
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
@@ -28,20 +26,12 @@ class PaginaPedido extends Component {
     const { platos, alElegir, alSalir, usuario } = this.props
 
     return (
-      <Container>
-        <Header>
-          <Title>Realizar pedido</Title>
-          <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-        </Header>
-        <Content>
-          <IndicatorViewPager
-              style={Pantalla.pagina}
-              indicator={ this.generarPuntos(platos.length+1) }>
-            <View><PaginaPresentacion /></View>
-            {platos.map( (plato, indice) => <View key={indice}><PaginaProducto plato={plato} alElegir={() => alElegir(plato)}/></View> )}
-          </IndicatorViewPager>
-        </Content>
-      </Container>
+      <Pagina titulo={"Realizar Pedidos"} alSalir={() => alSalir() }>
+        <IndicatorViewPager style={Pantalla.pagina} indicator={ this.generarPuntos(platos.length+1) }>
+          <View><PaginaPresentacion /></View>
+          {platos.map( (plato, indice) => <View key={indice}><PaginaProducto plato={plato} alElegir={ () => alElegir(plato) }/></View> )}
+        </IndicatorViewPager>
+      </Pagina>
     )
   }
 
@@ -54,7 +44,7 @@ class PaginaPedido extends Component {
 class PaginaPresentacion extends Component {
   render(){
     return (
-      <View style={Pantalla.contenido}>
+      <Contenido>
         <View style={{height: 140, backgroundColor: 'powderblue'}} />
         <View style={{flex: 1, backgroundColor: 'skyblue', alignItems: 'center'}}>
           <Text style={{fontSize:30, marginTop:20, height:100,color:'red'}}>El plato del dia</Text>
@@ -62,7 +52,7 @@ class PaginaPresentacion extends Component {
         <View style={{height: 50, backgroundColor: 'steelblue', alignItems:'center'}}>
           <Text style={{fontSize: 20}}>Tu plato en 30 minutos o gratis</Text>
          </View>
-      </View>
+      </Contenido>
     )
   }
 }
@@ -71,7 +61,7 @@ class PaginaProducto extends Component {
   render(){
     const {plato, alElegir} = this.props
     return (
-      <View style={Pantalla.contenido}>
+      <Contenido>
         <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)} >
           <Precio Precio={plato.Precio} />
         </Image>
@@ -80,7 +70,7 @@ class PaginaProducto extends Component {
             <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
         </View>
         <Button onPress={() => alElegir()} style={Pantalla.accion}> ¡Pedir Ya! </Button>
-      </View>
+      </Contenido>
     )
   }
 }

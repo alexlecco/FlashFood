@@ -12,10 +12,12 @@ import {
   Spinner, Icon, Badge, H1,
 } from 'native-base';
 
+import { Pagina, Contenido } from './../componentes/pagina';
+
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
 
-export default class Cadete extends Component {
+class Cadete extends Component {
     constructor(props){
       super(props)
 
@@ -77,26 +79,18 @@ export default class Cadete extends Component {
 
     const accion = pedido.estado === Estados.disponible ? 'Retirar ya!' : 'Entregar ya!'
     return (
-      <Container>
-        <Header>
-          <Title>Envio</Title>
-          <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-        </Header>
-        <Content>
-          <View style={Pantalla.contenido}>
-            <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
-              <Precio precio={plato.precio} />
-            </Image>
-            <View style={{marginTop: Pantalla.separacion}}>
-              <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
-              <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
-              {pedido.estado === Estados.disponible && <Cocinero {...props} />}
-              {pedido.estado === Estados.retirado   && <Cliente  {...props} />}
-            </View>
-            <Button block style={Pantalla.accion} onPress={ () => alElegir(pedido) }><Text>{accion}</Text></Button>
-          </View>
-        </Content>
-      </Container>
+      <Pagina titulo={"Envio"} alSalir={() => alSalir()}>
+        <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
+          <Precio precio={plato.precio} />
+        </Image>
+        <View style={{marginTop: Pantalla.separacion}}>
+          <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
+          <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
+          {pedido.estado === Estados.disponible && <Cocinero {...props} />}
+          {pedido.estado === Estados.retirado   && <Cliente  {...props} />}
+        </View>
+        <Button block style={Pantalla.accion} onPress={ () => alElegir(pedido) }><Text>{accion}</Text></Button>
+      </Pagina>
     )
   }
 
@@ -106,50 +100,33 @@ export default class Cadete extends Component {
     </View>
   )
 
-  const Cocinero = (props) => {
-    const {pedido, cocinero} = props
+  const Cocinero = ({pedido, cocinero}) =>
+    <Grid>
+      <Col><Thumbnail source={{uri: cocinero.foto}} size={100} /></Col>
+      <Col>
+        <Text style={Estilo.pedido.descripcion}> Cocinero: </Text>
+        <Text style={Estilo.pedido.cantidad}>{cocinero.nombre}</Text>
+        <Text style={Estilo.pedido.descripcion}> Dirección: </Text>
+        <Text style={Estilo.pedido.cantidad}>{cocinero.domicilio}</Text>
+      </Col>
+    </Grid>
 
-    return (
-      <Grid>
-        <Col><Thumbnail source={{uri: cocinero.foto}} size={100} /></Col>
-        <Col>
-          <Text style={Estilo.pedido.descripcion}> Cocinero: </Text>
-          <Text style={Estilo.pedido.cantidad}>{cocinero.nombre}</Text>
-          <Text style={Estilo.pedido.descripcion}> Dirección: </Text>
-          <Text style={Estilo.pedido.cantidad}>{cocinero.domicilio}</Text>
-        </Col>
-      </Grid>
-    )
-  }
-
-  const Cliente = (props) => {
-    const {pedido, cliente} = props
-
-    return (
-      <Grid>
-        <Col><Thumbnail source={{uri: cliente.foto}} size={100} /></Col>
-        <Col>
-          <Text style={Estilo.pedido.descripcion}> Cliente: </Text>
-          <Text style={Estilo.pedido.cantidad}>{cliente.nombre}</Text>
-          <Text style={Estilo.pedido.descripcion}> Dirección: </Text>
-          <Text style={Estilo.pedido.cantidad}>{cliente.domicilio}</Text>
-        </Col>
-      </Grid>
-    )
-  }
+  const Cliente = ({pedido, cliente}) =>
+    <Grid>
+      <Col><Thumbnail source={{uri: cliente.foto}} size={100} /></Col>
+      <Col>
+        <Text style={Estilo.pedido.descripcion}> Cliente: </Text>
+        <Text style={Estilo.pedido.cantidad}>{cliente.nombre}</Text>
+        <Text style={Estilo.pedido.descripcion}> Dirección: </Text>
+        <Text style={Estilo.pedido.cantidad}>{cliente.domicilio}</Text>
+      </Col>
+    </Grid>
 
   const Cargando = (props) => <View style={{flex:1, alignItems: 'stretch'}}><Spinner style={{flex:1}} color={"blue"} /></View>
 
-  const Libre = (props) => (
-      <Container>
-        <Header>
-          <Title>Envio</Title>
-          <Button transparent onPress={ () => props.alSalir() } ><Icon name='ios-home' /></Button>
-        </Header>
-        <Content>
-          <View style={[Pantalla.pagina,{backgroundColor:'red',}]}>
-              <Text style={{fontSize:20, alignSelf: 'stretch'}}>No hay pedidos</Text>
-          </View>
-        </Content>
-      </Container>
-  )
+  const Libre = (props) =>
+    <Pagina titulo={"Envio"} alSalir={() => props.alSalir()}>
+      <Text style={{fontSize: 20, alignSelf: 'center'}}>No hay pedidos</Text>
+    </Pagina>
+
+export { Cadete };

@@ -45,15 +45,15 @@ const Estilos = StyleSheet.create({
 const Plato = StyleSheet.create({
   precio: {
     backgroundColor: 'yellow',
-    opacity:0.6,
+    opacity: 0.6,
     fontSize: 40,
     fontWeight: 'normal',
   },
 
   ubicarPrecio: {
     position: 'absolute',
-    right: Pantalla.separacion,
-    bottom: Pantalla.separacion,
+    right: 0,
+    bottom: 0,
     height: 50,
     width: 120,
     alignItems: 'center',

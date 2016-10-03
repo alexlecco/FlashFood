@@ -3,16 +3,7 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 
-import {
-  Container, Header, Title, Content, Footer,
-  List, ListItem,
-  Thumbnail,
-  Button, Text, View,
-  Spinner, Icon,
-} from 'native-base';
-
-import StarRating from 'react-native-star-rating';
-import { IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
+import { Container, Header, Title, Content, Footer, Button, Text, View, Spinner, Icon, } from 'native-base';
 
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
@@ -28,7 +19,7 @@ const humanizeHora = (segundos) => {
   return `${h > 0 ? h + 'h ' : ''}${m > 0 ? m + 'm ' : ''}${s > 0 ? s + 's' : ''}`
 }
 
-export default class Cliente extends Component {
+class Cliente extends Component {
   constructor(props){
     super(props)
     this.state = { usuario: false, platos: false, pedidos: false}
@@ -110,8 +101,6 @@ export default class Cliente extends Component {
   }
 }
 
-
-
 class Pago extends Component {
   render(){
     const {demora, precio} = this.props
@@ -128,6 +117,9 @@ class Pago extends Component {
   }
 }
 
-const Cargando = (props) => <View style={{flex:1, alignItems: 'stretch'}}><Spinner style={{flex:1}} color={"red"} /></View>
+const Cargando = (props) =>
+  <View style={{flex:1, alignItems: 'stretch'}}><Spinner style={{flex:1}} color={"red"} /></View>
 
 console.log("IMPORT: Cliente v.2")
+
+export { Cliente }
