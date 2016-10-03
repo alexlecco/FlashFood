@@ -31,7 +31,7 @@ const Precio = ({precio}) =>
 const Accion = (props) => {
   switch (props.pedido.estado) {
     case Estados.pedido:
-        return (<Button block style={Pantalla.accion} onPress={ () => props.alCancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>);
+        return (<Button block style={Pantalla.accion} onPress={ () => props.alCancelar( props.pedido) }><Icon name='ios-close-circle' /> Cancelar!</Button>);
     case Estados.retirado:
         return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Está en camino. Salio {humanizeHora(30*60-props.pedido.demora)}</Text>);
     case Estados.entregado:
@@ -43,12 +43,12 @@ const Accion = (props) => {
   }
 }
 
-class PaginaSeguimiento extends Component {
+class PaginaConfirmar extends Component {
   render(){
-    const { pedido, plato,  alCancelar, alValorar, alSalir, usuario } = this.props
+    const { pedido, plato,  alCancelar, alConfirmar, alSalir, usuario } = this.props
     const { cadete, estado, cliente } = pedido
     return (
-      <Pagina titulo="Seguimiento 2" alSalir={() => alSalir() }>
+      <Pagina titulo="Confirmar" alSalir={() => alSalir() }>
         <Contenido>
           <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
             <Precio precio={plato.precio} />
@@ -57,11 +57,12 @@ class PaginaSeguimiento extends Component {
               <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
               <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
           </View>
-          <Accion {...this.props} pedido={pedido} />
+          <Button block style={Pantalla.accion1} onPress={ () => alCancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>
+          <Button block style={Pantalla.accion2} onPress={ () => alConfirmar() }><Icon name='ios-checkmark' /> Confirmar!</Button>
         </Contenido>
       </Pagina>
     )
   }
 }
 
-export { PaginaSeguimiento }
+export { PaginaConfirmar }

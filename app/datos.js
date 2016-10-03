@@ -10,6 +10,7 @@ const dbconfig = {
 };
 
 export const Estados = {
+  pendiente:  'pendiente',
   pedido:     'pedido',
   aceptado:   'aceptado',
   disponible: 'disponible',
@@ -200,10 +201,16 @@ export class Pedido extends Registro {
       return [Estados.aceptado, Estados.disponible, Estados.retirado].includes(this.estado)
     }
 
+    get plato(){
+      return this.platos[0].id
+    }
+
     // ACCIONES
     static pedir(cliente, plato){
-      const pedido = new Pedido({cliente: cliente.id, plato: plato.id})
-      pedido.cambiarEstado(Estados.pedido)
+      // const pedido = new Pedido({cliente: cliente.id, {platos: {plato: {id: plato.id, cantidad: 1}}})
+      const pedido = new Pedido({cliente: cliente.id})
+      pedido.agregar(plato.id)
+      pedido.cambiarEstado(Estados.pendiente)
     }
 
     cambiarEstado(estado){
@@ -215,6 +222,27 @@ export class Pedido extends Registro {
       this.escribir()
     }
 
+    agregar(plato){
+      this.platos = this.platos || []
+      let actual = this.platos.find( p => p.id == plato)
+      if(actual){
+        actual.cantidad += 1
+      } else {
+        this.platos.push({ id: plato, cantidad: 1, valoracion: 0 })
+      }
+      console.log("AGREGAR Plato", plato, this.platos)
+    }
+
+    quitar(plato){
+      this.platos = this.platos || []
+      let actual = this.platos.find( p => p.id == platos)
+      if(actual){
+        actual.cantidad -= 1
+      }
+      this.platos = this.platos.filter( p => p.cantidad > 0)
+      this.escribir()
+    }
+
     aceptar(cocinero){
       this.cocinero = cocinero
       this.cambiarEstado(Estados.aceptado)
@@ -222,6 +250,10 @@ export class Pedido extends Registro {
 
     disponer(){
       this.cambiarEstado(Estados.disponible)
+    }
+
+    confirmar(){
+      this.cambiarEstado(Estados.pedido)
     }
 
     cancelar(){
@@ -239,7 +271,7 @@ export class Pedido extends Registro {
 
     valorar(valoracion){
       if(valoracion >= 0 || valoracion <= 5){
-        this.valoracion = valoracion
+        this.platos[0].valoracion = valoracion
         this.cambiarEstado(Estados.recibido)
       }
     }

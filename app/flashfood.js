@@ -49,7 +49,7 @@ export default class FlashFood extends Component {
     console.log("RENDER Usuario:", usuario)
     console.log("RENDER Usuarios:", usuarios)
 
-    if(usuario.esCliente ) { console.log("precliente::"); return <Cliente  id={usuario.id} alSalir={ () => this.alSalir() }/> }
+    if(usuario.esCliente ) { return <Cliente  id={usuario.id} alSalir={ () => this.alSalir() }/> }
     if(usuario.esCocinero) { return <Cocinero id={usuario.id} alSalir={ () => this.alSalir() }/> }
     if(usuario.esCadete)   { return <Cadete   id={usuario.id} alSalir={ () => this.alSalir() }/> }
   }

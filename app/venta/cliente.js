@@ -9,6 +9,7 @@ import { Pagina, Contenido, Cargando } from './../componentes/pagina';
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
 
+import { PaginaConfirmar } from './pagina_confirmar';
 import { PaginaSeguimiento } from './pagina_seguimiento';
 import { PaginaPedido } from './pagina_pedido';
 
@@ -83,12 +84,21 @@ class Cliente extends Component {
       var pedido = pedidos[0]
       var plato  = platos.find(plato => plato.id === pedido.plato)
 
-      return <PaginaSeguimiento {...this.props}
+      if(pedido.estado === Estados.pendiente ){
+        return <PaginaConfirmar {...this.props}
+                    usuario={usuario}
+                    pedido={pedido}
+                    plato={plato}
+                    alCancelar  ={ () => pedido.cancelar() }
+                    alConfirmar ={ () => pedido.confirmar() } />
+      } else {
+        return <PaginaSeguimiento {...this.props}
                   usuario={usuario}
                   pedido={pedido}
                   plato={plato}
                   alCancelar ={ () => pedido.cancelar() }
                   alValorar  ={ valoracion => pedido.valorar(valoracion) } />
+      }
     }
 
     if(hayPlatos){
