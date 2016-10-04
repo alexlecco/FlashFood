@@ -58,8 +58,6 @@ class PaginaConfirmar extends Component {
           <View style={{marginTop: Pantalla.separacion}}>
               <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
               <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
-
-
               <List>
                 <ListItem>
                   <Text> ¿Dónde queres comer? </Text>
