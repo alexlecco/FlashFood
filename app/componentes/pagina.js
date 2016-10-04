@@ -9,7 +9,7 @@ const Pagina = ({titulo, alSalir, children}) =>
   <Container>
       <Header>
         <Title>{titulo}</Title>
-        {!!alSalir && <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>}
+        <BotonSalir alSalir={alSalir} />
       </Header>
     <Content>
       <View style={Pantalla.pagina}>{children}</View>
@@ -19,10 +19,10 @@ const Pagina = ({titulo, alSalir, children}) =>
 const Contenido = ({children}) =>
   <View style={Pantalla.contenido}>{children}</View>
 
-
 const Cargando = ({color}) =>
   <View style={{flex:1, alignItems: 'stretch'}}>
     <Spinner style={{flex:1}} color={color} />
   </View>
 
-export { Pagina, Contenido, Cargando }
+const BotonSalir = ({alSalir}) => !!alSalir && <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
+export { Pagina, Contenido, Cargando, BotonSalir }

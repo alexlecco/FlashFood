@@ -58,9 +58,12 @@ class PaginaConfirmar extends Component {
           <View style={{marginTop: Pantalla.separacion}}>
               <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
               <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
-              <Text> {"\n\n"} ¿Donde queres comer? </Text>
+
 
               <List>
+                <ListItem>
+                  <Text> ¿Dónde queres comer? </Text>
+                </ListItem>
                 <ListItem >
                     <Radio selected={ pedido.lugar === "oficina" } onPress={ () => pedido.entregarEn("oficina") } />
                     <Text>En la oficina</Text>
