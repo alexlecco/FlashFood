@@ -69,8 +69,8 @@ class Cadete extends Component {
 
   const Envio = (props) => {
     const { pedido, plato, cliente, cocinero, alElegir, alSalir } = props
-
     const accion = pedido.estado === Estados.disponible ? 'Retirar ya!' : 'Entregar ya!'
+
     return (
       <Pagina titulo={"Envio"} alSalir={() => alSalir()}>
         <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>

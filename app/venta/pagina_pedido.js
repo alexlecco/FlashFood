@@ -23,12 +23,11 @@ const humanizeHora = (segundos) => {
 
 class PaginaPedido extends Component {
   render(){
-    const { platos, alElegir, alSalir, usuario } = this.props
-
+    const { platos, alElegir, alSalir, usuario, presentacion } = this.props
     return (
       <Pagina titulo={"Realizar Pedidos"} alSalir={() => alSalir() }>
-        <IndicatorViewPager style={Pantalla.pagina} indicator={ this.generarPuntos(platos.length+1) }>
-          <View><PaginaPresentacion /></View>
+        <IndicatorViewPager style={Pantalla.pagina} indicator={ this.generarPuntos(platos.length + presentacion ? 1 : 0) }>
+          {!!presentacion &&<View><PaginaPresentacion /></View>}
           {platos.map( (plato, indice) => <View key={indice}><PaginaProducto plato={plato} alElegir={ () => alElegir(plato) }/></View> )}
         </IndicatorViewPager>
       </Pagina>
@@ -38,7 +37,6 @@ class PaginaPedido extends Component {
   generarPuntos(paginas){
     return <PagerDotIndicator pageCount={paginas} style={{bottom:80}}/>
   }
-
 }
 
 class PaginaPresentacion extends Component {
