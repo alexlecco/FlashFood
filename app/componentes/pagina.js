@@ -9,7 +9,7 @@ const Pagina = ({titulo, alSalir, children}) =>
   <Container>
       <Header>
         <Title>{titulo}</Title>
-        <BotonSalir alSalir={alSalir} />
+        {!!alSalir && <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>}
       </Header>
     <Content>
       <View style={Pantalla.pagina}>{children}</View>
@@ -24,5 +24,4 @@ const Cargando = ({color}) =>
     <Spinner style={{flex:1}} color={color} />
   </View>
 
-const BotonSalir = ({alSalir}) => !!alSalir && <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-export { Pagina, Contenido, Cargando, BotonSalir }
+export { Pagina, Contenido, Cargando}
