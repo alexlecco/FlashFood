@@ -2,6 +2,8 @@
 #
 .DS_Store
 
+
+
 # Xcode
 #
 build/
@@ -22,11 +24,20 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+
+
 # Android/IJ
 #
 .idea
 .gradle
 local.properties
+android/app/my-release-key.keystore
+my-release-key.keystore
+android/my-release-key.keystore
+android/build.gradle
+android/gradle.properties
+
+
 
 # node.js
 #

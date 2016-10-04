@@ -69,11 +69,15 @@ class PaginaConfirmar extends Component {
                     <Radio selected={ pedido.lugar === "bar" } onPress={ () => pedido.entregarEn("bar") } />
                     <Text>En el bar</Text>
                 </ListItem>
+                <ListItem>
+                    <Radio selected={ pedido.lugar === "baño" } onPress={ () => pedido.entregarEn("baño") } />
+                    <Text>En el Baño</Text>
+                </ListItem>
               </List>
 
           </View>
           <Button block style={Pantalla.accion1} onPress={ () => alCancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>
-          <Button block disabled={!pedido.lugar} style={Pantalla.accion2} onPress={ () => alConfirmar() }><Icon name='ios-checkmark' /> Confirmar!</Button>
+          <Button block style={Pantalla.accion2} onPress={ () => alConfirmar() }><Icon name='ios-checkmark' /> Confirmar!</Button>
         </Contenido>
       </Pagina>
     )

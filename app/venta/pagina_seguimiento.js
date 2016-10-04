@@ -24,8 +24,8 @@ const humanizeHora = (segundos) => {
 }
 
 const Precio = ({precio}) =>
-  <View style={Estilo.plato.ubicarPrecio}>
-    <Text style={Estilo.plato.precio}>u$s{precio}</Text>
+  <View>
+    <Text style={[ Estilo.plato.precio, Estilo.plato.ubicarPrecio ]}> ${precio} </Text>
   </View>
 
 const Accion = (props) => {
