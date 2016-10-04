@@ -73,6 +73,7 @@ class Cadete extends Component {
 
     return (
       <Pagina titulo={"Envio"} alSalir={() => alSalir()}>
+      <Contenido>
         <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
           <Precio precio={plato.precio} />
         </Image>
@@ -83,6 +84,7 @@ class Cadete extends Component {
           {pedido.estado === Estados.retirado   && <Cliente  {...props} />}
         </View>
         <Button block style={Pantalla.accion} onPress={ () => alElegir(pedido) }><Text>{accion}</Text></Button>
+        </Contenido>
       </Pagina>
     )
   }
