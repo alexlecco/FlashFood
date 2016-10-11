@@ -47,7 +47,6 @@ class Cadete extends Component {
       }
     }
 
-
     render(){
       const cadete = this.props.id
 
@@ -89,11 +88,10 @@ class Cadete extends Component {
     )
   }
 
-  const Precio = ({precio}) => (
-    <View style={{backgroundColor: 'yellow', opacity:0.6, position: 'absolute', right: Pantalla.separacion, bottom: Pantalla.separacion, height: 50, width: 120, alignItems: 'center'}}>
-      <Text style={Estilo.plato.precio}>${precio}</Text>
+  const Precio = ({precio}) =>
+    <View >
+      <Text style={[Estilo.plato.precio, Estilo.plato.ubicarPrecio]}>u$s{precio}</Text>
     </View>
-  )
 
   const Cocinero = ({pedido, cocinero}) =>
     <Grid>

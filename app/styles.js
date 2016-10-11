@@ -49,6 +49,7 @@ const Plato = StyleSheet.create({
     bottom: Pantalla.separacion,
     height: 50,
     width: 120,
+    alignSelf: 'center',
   },
 
   precio: {

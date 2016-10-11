@@ -36,7 +36,7 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
-  [Fabric with:@[[Digits class]]];
+//  [Fabric with:@[[Digits class]]];
   return YES;
 }
 

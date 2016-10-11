@@ -16,8 +16,8 @@ class Pantalla {
   static get contenido(){return {position: 'absolute', left: this.margen, top: this.margen, width: this.ancho, height: this.alto}}
 
   static get accion(){return {position: 'absolute', left: 0, bottom: 0, right: 0, height: this.pie}}
-  static get accion1(){return {position: 'absolute', left: 0, bottom: 0, width: 120, height: this.pie}}
-  static get accion2(){return {position: 'absolute', left: 120+this.separacion, bottom: 0, right: 0, height: this.pie}}
+  static get accion1(){return {position: 'absolute', left: 0, bottom: 0, width: 150, height: this.pie}}
+  static get accion2(){return {position: 'absolute', left: this.accion1.width+this.separacion, bottom: 0, right: 0, height: this.pie}}
   static imagen(relacion = 1.0){return {width: this.ancho, height: this.ancho / relacion}}
 }
 

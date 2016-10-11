@@ -12,6 +12,7 @@ import { Estilos, Estilo, Pantalla } from './../styles';
 import { PaginaConfirmar } from './pagina_confirmar';
 import { PaginaSeguimiento } from './pagina_seguimiento';
 import { PaginaPedido } from './pagina_pedido';
+import { Pedir } from './Pedir';
 
 const humanizeHora = (segundos) => {
   segundos = Math.floor(segundos)
@@ -84,6 +85,7 @@ class Cliente extends Component {
       var pedido = pedidos[0]
       var plato  = platos.find(plato => plato.id === pedido.plato)
 
+      // return <Pedir platos={platos} />
       if(pedido.estado === Estados.pendiente ){
         return <PaginaConfirmar {...this.props}
                     usuario={usuario}
@@ -95,9 +97,7 @@ class Cliente extends Component {
         return <PaginaSeguimiento {...this.props}
                   usuario={usuario}
                   pedido={pedido}
-                  plato={plato}
-                  alCancelar ={ () => pedido.cancelar() }
-                  alValorar  ={ valoracion => pedido.valorar(valoracion) } />
+                  plato={plato} />
       }
     }
 

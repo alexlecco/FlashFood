@@ -269,9 +269,14 @@ export class Pedido extends Registro {
       this.cambiarEstado(Estados.entregado)
     }
 
-    valorar(valoracion){
+    valoracion(valoracion){
       if(valoracion >= 0 || valoracion <= 5){
         this.platos[0].valoracion = valoracion
+      }
+    }
+
+    valorar(){
+      if(this.platos[0].valoracion >= 0){
         this.cambiarEstado(Estados.recibido)
       }
     }

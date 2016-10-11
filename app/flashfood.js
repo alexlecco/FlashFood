@@ -17,6 +17,8 @@ import { Cliente }  from './venta/cliente';
 import { Cocinero } from './cocina/cocinero';
 import { Cadete }   from './entrega/cadete';
 
+import { Examples } from '@shoutem/ui';
+
 export default class FlashFood extends Component {
 
   constructor (props){
@@ -40,6 +42,7 @@ export default class FlashFood extends Component {
   alSalir() { this.setState({ usuario: null }) }
 
   render() {
+    // return <Examples />
     const { usuarios, usuario } = this.state
 
     if(!usuarios)  { return <Cargando /> }

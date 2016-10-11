@@ -24,28 +24,33 @@ const humanizeHora = (segundos) => {
 }
 
 const Precio = ({precio}) =>
-  <View>
-    <Text style={[ Estilo.plato.precio, Estilo.plato.ubicarPrecio ]}> ${precio} </Text>
+  <View >
+    <Text style={[Estilo.plato.precio, Estilo.plato.ubicarPrecio]}>u$s{precio}</Text>
   </View>
 
-const Accion = (props) => {
-  switch (props.pedido.estado) {
-    case Estados.pedido:
-        return (<Button block style={Pantalla.accion} onPress={ () => props.alCancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>);
-    case Estados.retirado:
-        return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Está en camino. Salio {humanizeHora(30*60-props.pedido.demora)}</Text>);
-    case Estados.entregado:
-        return (<StarRating style={Pantalla.accion} rating={props.pedido.valoracion} selectedStar={ valoracion => props.alValorar(valoracion)} />);
-    case Estados.cancelado:
-        return null;
-    default:
-        return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Esperando... {humanizeHora(30*60-props.pedido.demora)}</Text>);
+  const Accion = ({pedido}) => {
+    switch (pedido.estado) {
+      case Estados.pedido:
+          return (<Button block style={Pantalla.accion} onPress={ () => pedido.cancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>);
+      case Estados.retirado:
+          return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Está en camino. Salio {humanizeHora(30*60-pedido.demora)}</Text>);
+      case Estados.entregado:
+          return (
+            <View>
+              <StarRating style={Pantalla.accion} rating={pedido.valoracion} selectedStar={ valoracion => pedido.valoracion(valoracion)} />
+              <Button block style={Pantalla.accion} onPress={ () => pedido.valorar() }><Icon name='ios-close-circle' />Valorar!</Button>
+            </View>
+          );
+      case Estados.cancelado:
+          return null;
+      default:
+          return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Esperando... {humanizeHora(30*60-props.pedido.demora)}</Text>);
+    }
   }
-}
 
 class PaginaSeguimiento extends Component {
   render(){
-    const { pedido, plato,  alCancelar, alValorar, alSalir, usuario } = this.props
+    const { pedido, plato, alSalir, usuario } = this.props
     const { cadete, estado, cliente } = pedido
     return (
       <Pagina titulo="Seguimiento 2" alSalir={() => alSalir() }>
@@ -57,7 +62,7 @@ class PaginaSeguimiento extends Component {
               <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
               <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
           </View>
-          <Accion {...this.props} pedido={pedido} />
+          <Accion {...this.props} />
         </Contenido>
       </Pagina>
     )

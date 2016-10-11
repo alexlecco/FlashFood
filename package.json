@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "postinstall": "rndebugger-open"
   },
   "dependencies": {
+    "@shoutem/theme": "^0.8.7",
+    "@shoutem/ui": "^0.9.1",
     "firebase": "^3.2.1",
     "native-base": "^0.5.4",
     "react": "15.2.1",
@@ -18,8 +20,5 @@
   },
   "devDependencies": {
     "react-native-debugger-open": "^0.3.1"
-  },
-  "scripts": {
-    "postinstall": "rndebugger-open"
   }
 }
