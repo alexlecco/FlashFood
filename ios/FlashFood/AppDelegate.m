@@ -19,11 +19,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
-
+//  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-  
- // jsCodeLocation = [NSURL URLWithString: @"http://192.168.1.67/index.ios.js"];
- // jsCodeLocation = [NSURL URLWithString: @"http://192.168.1.67:8081/index.ios.bundle"];
+
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"FlashFood"
                                                initialProperties:nil

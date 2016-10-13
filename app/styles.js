@@ -45,19 +45,31 @@ const Estilos = StyleSheet.create({
 const Plato = StyleSheet.create({
   ubicarPrecio: {
     position: 'absolute',
-    right: Pantalla.separacion,
+    right:  Pantalla.separacion,
     bottom: Pantalla.separacion,
-    height: 50,
     width: 120,
+    height: 40,
     alignSelf: 'center',
   },
 
   precio: {
     backgroundColor: 'yellow',
     opacity: 0.6,
-    fontSize: 40,
-    fontWeight: 'normal',
+    fontSize: 24,
+    color: 'red',
+    fontWeight: 'bold',
     textAlign:'center',
+    marginTop: 20,
+  },
+
+  precioCompacto: {
+    backgroundColor: 'yellow',
+    opacity: 0.6,
+    fontSize: 16,
+    color: 'red',
+    fontWeight: 'bold',
+    textAlign:'center',
+    marginTop: 10,
   },
 
   imagen: {
@@ -73,7 +85,13 @@ const Plato = StyleSheet.create({
   },
 
   descripcion: {
-    fontSize: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+
+  detalle: {
+    fontSize: 12,
     color: 'gray',
   },
 

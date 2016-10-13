@@ -13,13 +13,7 @@ import { Paginas, Pagina, Contenido } from './../componentes/pagina';
 import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
 
-const humanizeHora = (segundos) => {
-  segundos = Math.floor(segundos)
-  const s = segundos % 60
-  const m = ((segundos - s) / 60 ) % 60
-  const h = ((segundos - s - m * 60)/(60*60)) % 24
-  return `${h > 0 ? h + 'h ' : ''}${m > 0 ? m + 'm ' : ''}${s > 0 ? s + 's' : ''}`
-}
+import { MostrarPlato } from './Plato';
 
 class PaginaPedido extends Component {
   render(){
@@ -57,26 +51,14 @@ class PaginaPresentacion extends Component {
 
 class PaginaProducto extends Component {
   render(){
-    const {plato, alElegir} = this.props
+    const { plato, alElegir } = this.props;
     return (
       <Contenido>
-        <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)} >
-          <Precio Precio={plato.Precio} />
-        </Image>
-        <View style={{marginTop: Pantalla.separacion}}>
-            <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
-            <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
-        </View>
+        <MostrarPlato plato={plato} />
         <Button onPress={() => alElegir()} style={Pantalla.accion}> ¡Pedir Ya! </Button>
       </Contenido>
     )
   }
 }
-
-const Precio = ({precio}) =>
-  <View style={Estilo.plato.ubicarPrecio}>
-    <Text style={Estilo.plato.precio}>u$s{precio}</Text>
-  </View>
-
 
 export { PaginaPedido }

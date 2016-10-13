@@ -18,7 +18,7 @@ class Pantalla {
   static get accion(){return {position: 'absolute', left: 0, bottom: 0, right: 0, height: this.pie}}
   static get accion1(){return {position: 'absolute', left: 0, bottom: 0, width: 150, height: this.pie}}
   static get accion2(){return {position: 'absolute', left: this.accion1.width+this.separacion, bottom: 0, right: 0, height: this.pie}}
-  static imagen(relacion = 1.0){return {width: this.ancho, height: this.ancho / relacion}}
+  static imagen(relacion = 1.0, escala=1.0){return {width: escala * this.ancho, height: escala * this.ancho / relacion}}
 }
 
 console.log("IMPORT > Pantalla > ", Pantalla)
