@@ -28,20 +28,22 @@ const humanizeHora = (segundos) => {
 const Accion = ({pedido}) => {
   switch (pedido.estado) {
     case Estados.pedido:
-        return (<Button block style={Pantalla.accion} onPress={ () => pedido.cancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>);
-    case Estados.retirado:
-        return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Está en camino. Salio {humanizeHora(30*60-pedido.demora)}</Text>);
+        return <Button block style={Pantalla.accion} onPress={ () => pedido.cancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>;
     case Estados.entregado:
-        return (
-          <View>
-            <StarRating style={Pantalla.accion} rating={pedido.valoracion} selectedStar={ valoracion => pedido.valoracion(valoracion)} />
-            <Button block style={Pantalla.accion} onPress={ () => pedido.valorar() }><Icon name='ios-close-circle' />Valorar!</Button>
-          </View>
-        );
-    case Estados.cancelado:
-        return null;
+        return <Button block style={Pantalla.accion} onPress={ () => pedido.valorar() }><Icon name='ios-close-circle' />Valorar!</Button>;
     default:
-        return (<Text style={[Pantalla.accion, {fontSize: 20}]}>Esperando... {humanizeHora(30*60-props.pedido.demora)}</Text>);
+        return null;
+  }
+}
+
+const Estado = ({pedido}) => {
+  switch (pedido.estado) {
+    case Estados.retirado:
+        return <Text style={[Pantalla.accion, {fontSize: 20}]}>Está en camino. Salio {humanizeHora(30*60-pedido.demora)}</Text>;
+    case Estados.entregado:
+        return <StarRating rating={pedido.valoracionActual()} selectedStar={ valoracion => pedido.valoracion(valoracion)} />;
+    default:
+        return null;
   }
 }
 
@@ -53,6 +55,7 @@ class PaginaSeguimiento extends Component {
       <Pagina titulo="Seguimiento 2" alSalir={() => alSalir() }>
         <Contenido>
           <MostrarPlato plato={plato} compacto={false} />
+          <Estado {...this.props} />
           <Accion {...this.props} />
         </Contenido>
       </Pagina>
