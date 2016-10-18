@@ -2,8 +2,9 @@
 
 import React, { Component } from 'react';
 
-import { Container, Header, Title, Subtitle, Content, Footer, List, ListItem, Thumbnail, Button, Text, View } from 'native-base';
+import { AsyncStorage } from 'react-native';
 
+import { Container, Header, Title, Subtitle, Content, Footer, List, ListItem, Thumbnail, Button, Text, View } from 'native-base';
 
 // var DigitsAuthenticateButton = require('./DigitsAuthenticateButton');
 
@@ -31,15 +32,47 @@ export default class FlashFood extends Component {
 
   componentDidMount() {
     Usuario.observar()
+    this.leerUsuario()
   }
 
   componentWillUnmount(){
     Usuario.detener()
+    // Usuario.detener(this.state.usuario.id);
   }
 
   //ACCIONES DEL SISTEMA
-  alIngresar(usuario) { this.setState({ usuario: usuario }) }
-  alSalir() { this.setState({ usuario: null }) }
+  alIngresar(usuario) {
+    this.setState({ usuario: usuario })
+    this.escribirUsuario(usuario.id)
+  }
+
+  recuperarUsuario(id){
+  }
+
+  leerUsuario(){
+    console.log("PROBANDO leerUsuario");
+
+    AsyncStorage.getItem('@usuario:id')
+      .then( valor => Usuario.leer(valor) )
+      .catch( error => console.log("ERROR leerUsuario", error) )
+  }
+
+  escribirUsuario(id){
+    console.log("ESCRIBIR USUARIO:ID ", id)
+    AsyncStorage.setItem('@usuario:id', id)
+      .then( () => console.log("USUARIO GUARDADO") )
+      .catch( error => console.log("USUARIO CON ERROR", error))
+    // if(id==null){
+    //
+    // } else {
+      // AsyncStorage.setItem('@usuario:id', id, (aux) => console.log("USUARIO GUARDADO", aux));
+    // }
+  }
+
+  alSalir() {
+    this.setState({ usuario: null })
+    AsyncStorage.removeItem('@usuario:id');
+  }
 
   render() {
     // return <Examples />
@@ -57,7 +90,14 @@ export default class FlashFood extends Component {
 
 const ejecutarAccion = (accion) => {
   if(accion==0){ Datos.cargarPlatos() }
-  if(accion==1){ Datos.cargarUsuarios() }
+  if(accion==1){
+    Datos.cargarUsuarios();
+    console.log("PROBANDO getItem");
+    AsyncStorage.getItem('@usuario:id')
+      .then( valor => console.log("OK Probando getItem : ", valor) )
+      .catch( error => console.log("ERROR Probando getItem", error) )
+      // .done()
+  }
   if(accion==2){ Datos.borrarPedidos() }
 }
 

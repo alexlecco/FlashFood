@@ -140,6 +140,26 @@ class Registro {
     }
   }
 
+  static leer(condicion, destino=false){
+    const {registro, coleccion} = this
+    destino = destino || esID(condicion) ? registro : coleccion
+
+    this.informar(destino, false)
+    if(esID(condicion)){
+      const id = condicion
+      Datos.leer([coleccion, id],
+        datos => new this(datos),
+        datos => this.informar(destino, datos)
+      )
+    } else {
+      condicion = condicion || (x => true)
+      Datos.leer(coleccion,
+        datos => datos.map(item => new this(item)),
+        datos => this.informar(destino, datos.filter( condicion ) )
+      )
+    }
+  }
+
   static detener(id = null){
     Datos.detener([this.coleccion, id])
   }
