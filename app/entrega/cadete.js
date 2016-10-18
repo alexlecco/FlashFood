@@ -90,7 +90,7 @@ class Cadete extends Component {
 
   const Precio = ({precio}) =>
     <View >
-      <Text style={[Estilo.plato.precio, Estilo.plato.ubicarPrecio]}>u$s{precio}</Text>
+      <Text style={[Estilo.plato.precio, Estilo.plato.ubicarPrecio]}>${precio}</Text>
     </View>
 
   const Cocinero = ({pedido, cocinero}) =>

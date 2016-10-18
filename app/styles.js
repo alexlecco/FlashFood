@@ -59,7 +59,8 @@ const Plato = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
     textAlign:'center',
-    marginTop: 20,
+    marginTop: 5,
+    padding: 5,
   },
 
   precioCompacto: {
