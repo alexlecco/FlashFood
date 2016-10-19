@@ -19,6 +19,7 @@ import { Estilos, Estilo, Pantalla } from './../styles';
 import { MostrarPlato } from './Plato';
 
 class PaginaConfirmar extends Component {
+
   render(){
     const { pedido, plato,  alCancelar, alConfirmar, alSalir, usuario, lugar } = this.props
     const { cadete, estado, cliente } = pedido
@@ -29,15 +30,15 @@ class PaginaConfirmar extends Component {
           <MostrarPlato plato={plato} compacto={true}/>
           <List>
             <ListItem>
-              <Text> ¿Dónde queres comer? </Text>
+              <Text style={{fontWeight:'bold'}}> ¿Dónde queres comer? </Text>
             </ListItem>
-            <ListItem >
-                <Radio selected={ pedido.lugar === "oficina" } onPress={ () => pedido.entregarEn(pedido.lugar === "oficina" ? null : "oficina") } />
-                <Text>En la oficina</Text>
+            <ListItem button onPress={ () => pedido.entregarEn('oficina', false) }>
+              <Radio selected={ pedido.lugar === "oficina" } onPress={ () => pedido.entregarEn('oficina', false) } />
+              <Text> En la oficina</Text>
             </ListItem>
-            <ListItem>
-                <Radio selected={ pedido.lugar === "bar" } onPress={ () => pedido.entregarEn(pedido.lugar === "bar" ? null : "bar") } />
-                <Text>En el bar</Text>
+            <ListItem button onPress={ () => pedido.entregarEn('bar', false) }>
+              <Radio selected={ pedido.lugar === "bar" } onPress={ () => pedido.entregarEn('bar', false) } />
+              <Text> En el bar</Text>
             </ListItem>
           </List>
           <Button block style={Pantalla.accion1} onPress={ () => alCancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>

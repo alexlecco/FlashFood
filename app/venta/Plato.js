@@ -26,7 +26,7 @@ class PlatoCompacto extends Component {
     const {plato} = this.props;
     return (
       <View style={{flexDirection:'row'}}>
-        <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3, 0.4)}>
+        <Image source={{uri: plato.foto}} style={[Pantalla.imagen(4/3, 0.4), {borderRadius: 5,}]}>
           <Precio precio={plato.precio} compacto={true} />
         </Image>
         <View style={{marginLeft: Pantalla.separacion, flex: 1}}>
@@ -43,18 +43,17 @@ class PlatoNormal extends Component {
     const { plato } = this.props;
     return (
       <View>
-        <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3)}>
+        <Image source={{uri: plato.foto}} style={[Pantalla.imagen(4/3), {borderRadius: 5, }]}>
           <Precio precio={plato.precio} />
         </Image>
         <View style={{marginTop: Pantalla.separacion}}>
-            <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
-            <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
+          <Text style={Estilo.plato.descripcion}> {plato.descripcion} </Text>
+          <Text style={Estilo.plato.detalle}> {plato.detalle} </Text>
         </View>
       </View>
     )
   }
 }
-
 
 const Precio = ({ precio, compacto }) =>
   <View style={Estilo.plato.ubicarPrecio}>

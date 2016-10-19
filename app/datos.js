@@ -305,8 +305,12 @@ export class Pedido extends Registro {
       }
     }
 
-    entregarEn(lugar){
-      this.lugar = lugar
+    entregarEn(lugar, forzar = true){
+      if(forzar){
+        this.lugar = lugar
+      } else {
+        this.lugar = (this.lugar === lugar ? null : lugar)
+      }
       this.escribir()
     }
 }
