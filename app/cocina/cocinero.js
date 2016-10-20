@@ -23,6 +23,7 @@ class Cocinero extends Component {
     const cocinero = this.props.id
 
     Usuario.observar(cocinero, 'cocinero')
+    Usuario.observar(usuario => usuario.esCliente)
     Plato.observar(plato => plato.activo)
     Pedido.observar(pedido => pedido.enCocina(cocinero))
   }
@@ -31,6 +32,7 @@ class Cocinero extends Component {
     const {cocinero} = this.state
     cocinero && cocinero.detener()
 
+    Usuario.detener()
     Plato.detener()
     Pedido.detener()
   }
@@ -39,8 +41,8 @@ class Cocinero extends Component {
       const {pedidos} = this.state
       const cocinero = this.props.id
 
-      console.log("AL_ACEPTAR pedidos", pedidos)
-      console.log("AL_ACEPTAR cocinero", cocinero)
+      // console.log("AL_ACEPTAR pedidos", pedidos)
+      // console.log("AL_ACEPTAR cocinero", cocinero)
 
       const pedido = pedidos.find(pedido => pedido.plato === plato.id && pedido.estado === Estados.pedido)
       pedido && pedido.aceptar(cocinero)
@@ -67,6 +69,11 @@ class Cocinero extends Component {
     return Object.keys(comanda).map(plato => comanda[plato])
   }
 
+  organizarComanda(){
+    const {pedidos, platos, usuarios} = this.state
+
+  }
+
   render(){
     const {usuario, platos, pedidos}  = this.state
     const hayDatos = usuario && platos && pedidos
@@ -80,12 +87,69 @@ class Cocinero extends Component {
   }
 }
 
+const ItemPedido = ({pedido}) =>
+  <ListItem>
+    <Grid>
+      <Col>
+        <Row><Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3, 0.3)} /></Row>
+        <Row><Text>{plato.descripcion}</Text></Row>
+      </Col>
+      <Col>
+        <Row><Thumbnail source={{uri: cliente.foto}} size={100} /></Row>
+        <Row><Text>{cliente.nombre}</Text></Row>
+      </Col>
+      <Col>
+        <Button onPress={ () => alAceptar(plato) }>Producir</Button>}
+        <Text>{pedido.hora}</Text>
+      </Col>
+    </Grid>
+  </ListItem>
+
+const ItemComanda1 = ({item: {plato, estados}, alAceptar, alDisponer}) =>
+  <ListItem style={{height: 200, borderColor:'blue', borderWidth:1, borderRadius: 5}}>
+    <Grid style={{borderColor:'red',borderWidth:2}}>
+      <Col>
+        <Row>
+          <Text style={{fontSize:12, textAlign: 'center'}}>{plato.descripcion}</Text>
+        </Row>
+        <Row>
+          <Image source={{uri: plato.foto}} style={{width:150, height: 150/(4/3), alignSelf: 'center'}} />
+        </Row>
+      </Col>
+
+      <Col>
+        <Row>
+          <Col>
+            <Text style={Estilo.pedido.descripcion}>Esperando</Text>
+            <Text style={Estilo.pedido.cantidad}>{estados[Estados.pedido] || ""}</Text>
+          </Col>
+          <Col>
+            {estados[Estados.pedido] && <Button onPress={ () => alAceptar(plato) }>Producir</Button>}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Text style={Estilo.pedido.descripcion}>Cocinado</Text>
+            <Text style={Estilo.pedido.cantidad}>{estados[Estados.aceptado] || ""}</Text>
+          </Col>
+          <Col>
+            {estados[Estados.aceptado] && <Button onPress={ () => alDisponer(plato)}>Entregar</Button>}
+          </Col>
+        </Row>
+        <Row>
+          <Text style={Estilo.pedido.descripcion}>Disponible</Text>
+          <Text style={Estilo.pedido.cantidad}>{estados[Estados.disponible] || ""}</Text>
+        </Row>
+      </Col>
+    </Grid>
+  </ListItem>
+
 const ItemComanda = ({item: {plato, estados}, alAceptar, alDisponer}) =>
   <ListItem>
     <Grid>
       <Col>
         <Card style={{marginRight:5}}>
-          <CardItem header>
+          <CardItem>
             <Text style={{fontSize:12, textAlign: 'center'}}>{plato.descripcion}</Text>
           </CardItem>
           <CardItem >

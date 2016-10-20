@@ -9,28 +9,20 @@ const dbconfig = {
   storageBucket: "contador-903c2.appspot.com",
 };
 
-export const Estados = {
-  pendiente:  'pendiente',
-  pedido:     'pedido',
-  aceptado:   'aceptado',
-  disponible: 'disponible',
-  retirado:   'retirado',
-  entregado:  'entregado',
-  recibido:   'recibido',
 
-  cancelado:  'cancelado',
-}
+export const ListaEstados = 'pendiente | pedido | aceptado | disponible | retirado | entregado | recibido | cancelado'.split(' | ')
+export const Estados      = ListaEstados.reduce( (h, x) => Object.assign(h, {[x]:x}), {} )
 
 const base = firebase.initializeApp(dbconfig);
 const raiz = base.database().ref()
 
 const values = objeto => Object.keys(objeto || []).map(clave => objeto[clave])
 
-const Plurales   = [ [/ci[oÃ³]n$/, 'ciones'], [/z$/, 'ces'], [/([aeiou])$/, '$1s'],]
+const Plurales   = [ [/n$/, 'nes'], [/z$/, 'ces'], [/([aeiou])$/, '$1s'],]
 const Singulares = [ [/nes$/, 'n'], [/ces$/, 'z'], [/([aeiou])s$/, '$1'],]
 
-String.prototype.plural   = function() { return Plurales.reduce( (tmp, x) => tmp.replace(x[0], x[1]), this) }
-String.prototype.singular = function() { return Singulares.reduce( (tmp, x) => tmp.replace(x[0], x[1]), this) }
+String.prototype.plural = function() { return Plurales.reduce( (tmp, [r, s]) => tmp.replace(r, s), this) }
+String.prototype.singular = function() { return Singulares.reduce( (tmp, [r, s]) => tmp.replace(r, s), this) }
 
 const FormatoID = /^\w+$/
 const esString = item => typeof(item) === 'string'
@@ -39,8 +31,8 @@ const esFuncion= item => typeof(item) === 'function'
 
 // CAPA DE DATOS
 
-const normalizar  = camino => (Array.isArray(camino) ? camino : [camino]).filter(campo => !!campo)
-const url         = camino => camino.join('/').toLowerCase()
+const normalizar = camino => (Array.isArray(camino) ? camino : [camino]).filter(campo => !!campo)
+const url        = camino => camino.join('/').toLowerCase()
 
 const esColeccion = camino => normalizar(camino).length == 1
 // const esRegistro  = camino => normalizar(camino).length == 2
@@ -188,12 +180,12 @@ export class Pedido extends Registro {
     }
 
     get demora(){
-      const pedido  = this.horas[Estados.pedido]
-      return pedido ? (new Date() - pedido) / 1000 : null
+      const pedido   = this.horas[Estados.pedido]
+      return pedido  ? (new Date() - pedido) / 1000 : null
     }
 
     get salio(){
-      const retirado = this.horas[Estados.retirado]
+      const retirado  = this.horas[Estados.retirado]
       return retirado ? (new Date() - retirado) / 1000 : null
     }
 

@@ -55,7 +55,9 @@ class PaginaSeguimiento extends Component {
       <Pagina titulo="Seguimiento 2" alSalir={() => alSalir() }>
         <Contenido>
           <MostrarPlato plato={plato} compacto={false} />
+          <View style={{position:'absolute',bottom:100,left:20,right:20}}>
           <Estado {...this.props} />
+          </View>
           <Accion {...this.props} />
         </Contenido>
       </Pagina>

@@ -23,7 +23,7 @@ class Cadete extends Component {
     componentDidMount() {
       const cadete = this.props.id
       Usuario.observar(cadete)
-      Usuario.observar( usuario => usuario.esCliente || usuario.esCocinero )
+      Usuario.observar(usuario => usuario.esCliente || usuario.esCocinero )
 
       Plato.observar( plato => plato.activo )
       Pedido.observar( pedido => pedido.enEntrega(cadete) )
