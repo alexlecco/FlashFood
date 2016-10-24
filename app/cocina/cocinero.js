@@ -195,7 +195,7 @@ const AdministrarComanda = (props) => {
   return (
     <Container>
       <Header>
-        <Title>Comanda para {cocinero.id}</Title>
+        <Title>Comanda para [{cocinero.id}]</Title>
         <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
       </Header>
       <Content style={{flex:1}}>

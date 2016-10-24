@@ -81,8 +81,6 @@ export class Datos {
     static valores(origen) { return values(origen.val()) }
 }
 
-// EXPERIMENTAL
-
 class Registro {
   static registrar(componente){ this.componente = componente }
   static informar(nombre, valor){
@@ -225,6 +223,15 @@ export class Pedido extends Registro {
       pedido.cambiarEstado(Estados.pendiente)
     }
 
+    entregarEn(lugar, forzar = true){
+      if(forzar){
+        this.lugar = lugar
+      } else {
+        this.lugar = (this.lugar === lugar ? null : lugar)
+      }
+      this.escribir()
+    }
+
     cambiarEstado(estado){
       if(this.estado != estado){
         this.estado = estado
@@ -242,7 +249,7 @@ export class Pedido extends Registro {
       } else {
         this.platos.push({ id: plato, cantidad: 1, valoracion: 0 })
       }
-      console.log("AGREGAR Plato", plato, this.platos)
+      this.escribir()
     }
 
     quitar(plato){
@@ -297,12 +304,4 @@ export class Pedido extends Registro {
       }
     }
 
-    entregarEn(lugar, forzar = true){
-      if(forzar){
-        this.lugar = lugar
-      } else {
-        this.lugar = (this.lugar === lugar ? null : lugar)
-      }
-      this.escribir()
-    }
 }

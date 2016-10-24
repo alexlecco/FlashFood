@@ -60,6 +60,7 @@ class Cliente extends Component {
 
   componentDidMount() {
     const cliente = this.props.id
+
     Usuario.observar(cliente)
     Pedido.observar(pedido => pedido.enPedido(cliente))
     Plato.observar(plato => plato.activo)
@@ -88,11 +89,11 @@ class Cliente extends Component {
       // return <Pedir platos={platos} />
       if(pedido.estado === Estados.pendiente ){
         return <PaginaConfirmar {...this.props}
-                    usuario={usuario}
-                    pedido={pedido}
-                    plato={plato}
-                    alCancelar  ={ () => pedido.cancelar() }
-                    alConfirmar ={ () => pedido.confirmar() } />
+                  usuario={usuario}
+                  pedido={pedido}
+                  plato={plato}
+                  alConfirmar ={ () => pedido.confirmar() }
+                  alCancelar  ={ () => pedido.cancelar()  } />
       } else {
         return <PaginaSeguimiento {...this.props}
                   usuario={usuario}
