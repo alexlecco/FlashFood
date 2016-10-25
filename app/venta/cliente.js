@@ -93,7 +93,7 @@ class Cliente extends Component {
                   pedido={pedido}
                   plato={plato}
                   alConfirmar ={ () => pedido.confirmar() }
-                  alCancelar  ={ () => pedido.cancelar()  } />
+                  alCancelar ={ () => pedido.cancelar() } />
       } else {
         return <PaginaSeguimiento {...this.props}
                   usuario={usuario}

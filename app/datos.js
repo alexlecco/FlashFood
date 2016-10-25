@@ -169,7 +169,7 @@ export class Plato extends Registro {
 }
 
 export class Pedido extends Registro {
-    static get EsperaMaxima(){ return 30 * 60 } // 30 minutos o GRATIS
+    static get EsperaMaxima(){ return 5 * 60 } // 30 minutos o GRATIS
 
     get horas(){
       var horas = {}
@@ -177,21 +177,36 @@ export class Pedido extends Registro {
       return horas
     }
 
-    get demora(){
-      const pedido   = this.horas[Estados.pedido]
-      return pedido  ? (new Date() - pedido) / 1000 : null
+    get tiempoPedido(){
+      const pedido = this.horas[Estados.pedido]
+      const recibido = this.horas[Estados.recibido] || (new Date())
+      return pedido ? (recibido - pedido) / 1000 : null
     }
 
-    get salio(){
-      const retirado  = this.horas[Estados.retirado]
-      return retirado ? (new Date() - retirado) / 1000 : null
+    get tiempoCoccion(){
+      const aceptado  = this.horas[Estados.aceptado]
+      const entregado = this.horas[Estados.entregado] || (new Date())
+
+      return aceptado ? (entregado - aceptado) / 1000 : null
     }
 
-    get duracion(){
-      const pedido    = this.horas[Estados.pedido]
-      const entregado = this.horas[Estados.entregado]
-      return pedido && entregado ? (entregado - pedido) / 1000 : null
+    get tiempoFaltante(){
+      const pedido = this.horas[Estados.pedido]
+      const entregado = this.horas[Estados.entregado] || (new Date())
+
+      return (Pedido.EsperaMaxima - (entregado - pedido) / 1000)
     }
+
+    // get salio(){
+    //   const retirado = this.horas[Estados.retirado]
+    //   return retirado ? (new Date() - retirado) / 1000 : null
+    // }
+    //
+    // get duracion(){
+    //   const pedido    = this.horas[Estados.pedido]
+    //   const entregado = this.horas[Estados.entregado]
+    //   return pedido && entregado ? (entregado - pedido) / 1000 : null
+    // }
 
     get activo(){ return this.estado != Estados.cancelado && this.estado != Estados.pendiente && this.estado != Estados.recibido }
 
@@ -288,18 +303,18 @@ export class Pedido extends Registro {
       this.cambiarEstado(Estados.entregado)
     }
 
-    valoracionActual(){
+    get valoracion(){
       return this.platos[0].valoracion || 0
     }
 
-    valoracion(valor){
+    ponerValoracion(valor){
       if(valor >= 0 || valor <= 5){
         this.platos[0].valoracion = valor
       }
     }
 
     valorar(){
-      if(this.valoracionActual() >= 0){
+      if(this.valoracion >= 0){
         this.cambiarEstado(Estados.recibido)
       }
     }

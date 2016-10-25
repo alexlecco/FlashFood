@@ -30,20 +30,63 @@ const Accion = ({pedido}) => {
     case Estados.pedido:
         return (<Button block style={Pantalla.accion} onPress={ () => pedido.cancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>)
     case Estados.entregado:
-        return (<Button block style={Pantalla.accion} onPress={ () => pedido.valorar() }><Icon name='ios-close-circle' />Valorar!</Button>);
+        return (<Button block disabled={!pedido.valoracion} style={Pantalla.accion} onPress={ () => pedido.valorar() }><Icon name='ios-close-circle' />Valorar!</Button>);
     default:
         return null;
   }
 }
 
+const Mostrar = ({texto, demora, faltante, completo}) => {
+  const mensajeRapido = completo ? "Misión cumplida. Nos sobró "+humanizeHora(faltante) : "Te lo entregamos en "+humanizeHora(faltante)
+  const mensajeLento  = (completo ? "Fallamos por " + humanizeHora(-faltante) : "Estamos " + humanizeHora(-faltante) +" atrazados") + " pero..."
+  const ofertaRapido  = completo ? "" : "o comes gratis"
+  const ofertaLento   = "HOY " + (completo ? "COMISTE" : "COMES") +" GRATIS"
+  return (
+    <View style={{position:'absolute', bottom: 200, left:20, right: 20}}>
+      <Text style={{fontSize: 20}}>{texto} {humanizeHora(demora)}</Text>
+      <Text style={{color: 'red'}}>{faltante > 0 ? mensajeRapido : mensajeLento}</Text>
+      <Text>{faltante > 0 ? ofertaRapido : ofertaLento}</Text>
+    </View>
+  )
+}
+
 const Estado = ({pedido}) => {
+  console.log("");
+  console.log("PEDIDO:", pedido);
+  console.log(" t. pedido:", pedido.tiempoPedido)
+  console.log(" t. faltante:", pedido.tiempoFaltante)
   switch (pedido.estado) {
-    case Estados.retirado:
-        return <Text style={[Pantalla.accion, {fontSize: 20}]}>Está en camino. Salio {humanizeHora(30*60-pedido.demora)}</Text>;
+    case Estados.pendiente:
+        return <Mostrar texto={"Pedido en curso"} demora={null} faltante={pedido.tiempoFaltante} />
+
+    case Estados.pedido:
+        return <Mostrar texto={"Pedido realizado hace"} demora={pedido.tiempoPedido} faltante={pedido.tiempoFaltante} />
+
+    case Estados.aceptado:
+        return <Mostrar texto={"Plato en la cocina"} demora={pedido.tiempoCoccion} faltante={pedido.tiempoFaltante} />
+
     case Estados.entregado:
-        return <StarRating rating={pedido.valoracionActual()} selectedStar={ valoracion => pedido.valoracion(valoracion)} />;
+        return (
+            <View>
+              <Mostrar texto="Plato entregado hace " demora={pedido.tiempoPedido} faltante={pedido.tiempoFaltante} completo={true}/>
+              <View style={{position:'absolute', bottom: 100, left:20, right: 20}}>
+                <StarRating rating={pedido.valoracion} selectedStar={ valoracion => pedido.ponerValoracion(valoracion)} />
+              </View>
+            </View>
+        )
+
+    case Estados.recibido:
+        return <Mostrar texto={"Plato entregado"} demora={pedido.tiempoPedido} faltante={pedido.tiempoFaltante} />
+
     default:
-        return null;
+        return (
+          <View style={{position:'absolute', bottom: 100, left:20, right: 20}}>
+              <Text style={{fontSize: 20}}>ESTADO: {pedido.estado}</Text>
+              <Text style={{fontSize: 20}}> ⏳ PEDIDO   : {humanizeHora(pedido.tiempoPedido)}</Text>
+              <Text style={{fontSize: 20}}> ⏳ ACEPTADO : {humanizeHora(pedido.tiempoCoccion)}</Text>
+              <Text style={{fontSize: 20}}> ⏳ ENTREGADO: {humanizeHora(pedido.tiempoFaltante)}</Text>
+           </View>
+      )
   }
 }
 
@@ -52,12 +95,10 @@ class PaginaSeguimiento extends Component {
     const { pedido, plato, alSalir, usuario } = this.props
     const { cadete, estado, cliente } = pedido
     return (
-      <Pagina titulo="Seguimiento 2" alSalir={() => alSalir() }>
+      <Pagina titulo="Seguimiento.3" alSalir={() => alSalir() }>
         <Contenido>
           <MostrarPlato plato={plato} compacto={false} />
-          <View style={{position:'absolute',bottom:100,left:20,right:20}}>
           <Estado {...this.props} />
-          </View>
           <Accion {...this.props} />
         </Contenido>
       </Pagina>
