@@ -165,7 +165,7 @@ export class Usuario extends Registro {
 
 export class Plato extends Registro {
   get foto(){return `https://dl.dropboxusercontent.com/u/1086383/platos/${this.id}.jpg`}
-  get detalle(){ return `Esta es una descripcion larga de ${this.titulo}, solo para mostrar en el demo.`}
+  get detalle(){ return `Esta es una descripcion larga de ${this.descripcion}, solo para mostrar en el demo.`}
 }
 
 export class Pedido extends Registro {

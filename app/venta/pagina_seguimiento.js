@@ -40,9 +40,9 @@ const Mostrar = ({texto, demora, faltante, completo}) => {
   const mensajeRapido = completo ? "Misión cumplida. Nos sobró "+humanizeHora(faltante) : "Te lo entregamos en "+humanizeHora(faltante)
   const mensajeLento  = (completo ? "Fallamos por " + humanizeHora(-faltante) : "Estamos " + humanizeHora(-faltante) +" atrazados") + " pero..."
   const ofertaRapido  = completo ? "" : "o comes gratis"
-  const ofertaLento   = "HOY " + (completo ? "COMISTE" : "COMES") +" GRATIS"
+  const ofertaLento   = "¡HOY " + (completo ? "COMISTE" : "COMES") +" GRATIS!"
   return (
-    <View style={{position:'absolute', bottom: 200, left:20, right: 20}}>
+    <View style={{position:'absolute', bottom: 150, left:20, right: 20}}>
       <Text style={{fontSize: 20}}>{texto} {humanizeHora(demora)}</Text>
       <Text style={{color: 'red'}}>{faltante > 0 ? mensajeRapido : mensajeLento}</Text>
       <Text>{faltante > 0 ? ofertaRapido : ofertaLento}</Text>
