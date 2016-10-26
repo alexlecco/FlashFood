@@ -2,9 +2,6 @@
   "name": "FlashFood",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "postinstall": "rndebugger-open"
-  },
   "dependencies": {
     "@shoutem/theme": "^0.8.7",
     "@shoutem/ui": "^0.9.1",
@@ -12,13 +9,9 @@
     "native-base": "^0.5.4",
     "react": "15.2.1",
     "react-native": "0.30.0",
-    "react-native-fabric-digits": "github:jeanlebrument/react-native-fabric-digits",
     "react-native-star-rating": "^1.0.6",
     "react-native-timer": "^1.1.2",
     "react-native-vector-icons": "^2.1.0",
     "rn-viewpager": "^1.1.3"
-  },
-  "devDependencies": {
-    "react-native-debugger-open": "^0.3.1"
   }
 }

@@ -8,16 +8,13 @@
  */
 
 #import "AppDelegate.h"
-#import <Fabric/Fabric.h>
-#import <DigitsKit/DigitsKit.h>
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   NSURL *jsCodeLocation;
 //jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];                            // PRODUCCION
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];  // DESARROLLO
@@ -35,7 +32,6 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
-//  [Fabric with:@[[Digits class]]];
   return YES;
 }
 
