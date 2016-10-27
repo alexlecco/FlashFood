@@ -171,6 +171,12 @@ export class Plato extends Registro {
 export class Pedido extends Registro {
     static get EsperaMaxima(){ return 5 * 60 } // 30 minutos o GRATIS
 
+    static ordenCronologico(a, b) {
+      const horaA = a.horas[Estados.pedido]
+      const horaB = b.horas[Estados.pedido]
+      return horaA && horaB ? horaA - horaB : 0
+    }
+
     get horas(){
       var horas = {}
       values(this.historia).forEach( ({estado, hora}) => horas[estado] = new Date(hora) )

@@ -53,9 +53,21 @@ class Cocinero extends Component {
   }
 
   calcularComanda(){
-    const {pedidos, platos} = this.state
+    const {pedidos, platos, usuarios} = this.state
 
     var comanda = {}
+    // Ordenar pedidos
+    let pedidosOrdenados = pedidos.sort(Pedido.ordenCronologico)
+    // Completar Informacion
+    let comandita = pedidosOrdenados.map( pedido => {
+        cliente: usuarios.find((cliente) => cliente.id == pedido.cliente),
+        plato:   platos.find((plato) => plato.id == pedido.plato,
+        pedido,
+      }
+    )
+    console.log("PEDIDOS ORDENADOS Y COMPLETADOS")
+    console.log(comandita)
+
     platos.forEach( plato => comanda[plato.id] = { plato, estados: {} } )
     pedidos.forEach( ({plato, estado}) => {
         const estados = comanda[plato].estados
@@ -67,7 +79,7 @@ class Cocinero extends Component {
 
   organizarComanda(){
     const {pedidos, platos, usuarios} = this.state
-    
+
   }
 
   render(){
