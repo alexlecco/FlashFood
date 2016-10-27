@@ -177,24 +177,26 @@ export class Pedido extends Registro {
       return horas
     }
 
+    tiempoEntre(desde, hasta){
+      const tiempoDesde = this.horas[desde]
+      const tiempoHasta = this.horas[hasta] || (new Date())
+      return (tiempoDesde && tiempoHasta) ? (tiempoHasta - tiempoDesde) / 1000 : null
+    }
+
     get tiempoPedido(){
-      const pedido = this.horas[Estados.pedido]
-      const recibido = this.horas[Estados.recibido] || (new Date())
-      return pedido ? (recibido - pedido) / 1000 : null
+      return this.tiempoEntre(Estados.pedido, Estados.recibido)
+    }
+
+    get tiempoValoracion(){
+      return this.tiempoEntre(Estados.entregado, Estados.recibido)
     }
 
     get tiempoCoccion(){
-      const aceptado  = this.horas[Estados.aceptado]
-      const entregado = this.horas[Estados.entregado] || (new Date())
-
-      return aceptado ? (entregado - aceptado) / 1000 : null
+      return this.tiempoEntre(Estados.aceptado, Estados.entregado)
     }
 
     get tiempoFaltante(){
-      const pedido = this.horas[Estados.pedido]
-      const entregado = this.horas[Estados.entregado] || (new Date())
-
-      return (Pedido.EsperaMaxima - (entregado - pedido) / 1000)
+      return Pedido.EsperaMaxima - this.tiempoEntre(Estados.pedido, Estados.entregado)
     }
 
     // get salio(){

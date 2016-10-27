@@ -22,6 +22,7 @@ const humanizeHora = (segundos) => {
   const s = segundos % 60
   const m = ((segundos - s) / 60 ) % 60
   const h = ((segundos - s - m * 60)/(60*60)) % 24
+
   return `${h > 0 ? h + 'h ' : ''}${m > 0 ? m + 'm ' : ''}${s > 0 ? s + 's' : ''}`
 }
 
@@ -51,10 +52,6 @@ const Mostrar = ({texto, demora, faltante, completo}) => {
 }
 
 const Estado = ({pedido}) => {
-  console.log("");
-  console.log("PEDIDO:", pedido);
-  console.log(" t. pedido:", pedido.tiempoPedido)
-  console.log(" t. faltante:", pedido.tiempoFaltante)
   switch (pedido.estado) {
     case Estados.pendiente:
         return <Mostrar texto={"Pedido en curso"} demora={null} faltante={pedido.tiempoFaltante} />
@@ -68,7 +65,7 @@ const Estado = ({pedido}) => {
     case Estados.entregado:
         return (
             <View>
-              <Mostrar texto="Plato entregado hace " demora={pedido.tiempoPedido} faltante={pedido.tiempoFaltante} completo={true}/>
+              <Mostrar texto="Plato entregado hace " demora={pedido.tiempoValoracion} faltante={pedido.tiempoFaltante} completo={true}/>
               <View style={{position:'absolute', bottom: 100, left:20, right: 20}}>
                 <StarRating rating={pedido.valoracion} selectedStar={ valoracion => pedido.ponerValoracion(valoracion)} />
               </View>

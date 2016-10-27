@@ -38,22 +38,17 @@ class Cocinero extends Component {
   }
 
   alAceptar = (plato) => {
-      const {pedidos} = this.state
+      const { pedidos } = this.state
       const cocinero = this.props.id
-
-      // console.log("AL_ACEPTAR pedidos", pedidos)
-      // console.log("AL_ACEPTAR cocinero", cocinero)
-
       const pedido = pedidos.find(pedido => pedido.plato === plato.id && pedido.estado === Estados.pedido)
       pedido && pedido.aceptar(cocinero)
   }
 
   alDisponer = (plato) => {
-    const {pedidos} = this.state
+    const { pedidos } = this.state
     const cocinero = this.props.id
 
     const pedido = pedidos.find(pedido => pedido.plato === plato.id && pedido.estado === Estados.aceptado && pedido.cocinero === cocinero)
-    // pedido && pedido.disponer()
     pedido && pedido.entregar()
   }
 
@@ -72,7 +67,7 @@ class Cocinero extends Component {
 
   organizarComanda(){
     const {pedidos, platos, usuarios} = this.state
-
+    
   }
 
   render(){
