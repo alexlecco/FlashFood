@@ -5,7 +5,7 @@ import { Image } from 'react-native';
 import { Container, Header, Title, Content, Grid, Col, Row, List, ListItem, Card, CardItem, Button, Text, View, Spinner, Icon, } from 'native-base';
 
 import { Pagina, Contenido, Cargando } from './../componentes/pagina';
-import { Usuario, Pedido, Plato, Estados } from './../datos'
+import { Usuario, Pedido, Plato, Estados } from './../datos';
 import { Estilos, Estilo, Pantalla } from './../styles';
 
 class Cocinero extends Component {
@@ -59,11 +59,11 @@ class Cocinero extends Component {
     // Ordenar pedidos
     let pedidosOrdenados = pedidos.sort(Pedido.ordenCronologico)
     // Completar Informacion
-    let comandita = pedidosOrdenados.map( pedido => {
+    let comandita = pedidosOrdenados.map( pedido => ({
         cliente: usuarios.find((cliente) => cliente.id == pedido.cliente),
-        plato:   platos.find((plato) => plato.id == pedido.plato,
+        plato:   platos.find((plato)     => plato.id   == pedido.plato),
         pedido,
-      }
+      })
     )
     console.log("PEDIDOS ORDENADOS Y COMPLETADOS")
     console.log(comandita)
@@ -215,4 +215,4 @@ const AdministrarComanda = (props) => {
 
 console.log("IMPORT: Cocinero")
 
-export { Cocinero };
+export { Cocinero }
