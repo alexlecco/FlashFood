@@ -14,9 +14,9 @@ import { Estilos, Estilo, Pantalla } from './styles';
 import { Usuario, Datos } from './datos';
 
 
-import { Cliente }  from './venta/cliente';
-import { Cocinero } from './cocina/cocinero';
-import { Cadete }   from './entrega/cadete';
+import { Cliente }  from './venta/Cliente';
+import { Cocinero } from './cocina/Cocinero';
+import { Cadete }   from './entrega/Cadete';
 
 import { Examples } from '@shoutem/ui';
 
