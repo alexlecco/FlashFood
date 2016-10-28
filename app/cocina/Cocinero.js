@@ -6,7 +6,7 @@ import { Container, Header, Title, Content, Grid, Col, Row, List, ListItem, Card
 
 import { Pagina, Contenido, Cargando } from './../componentes/pagina';
 import { Usuario, Pedido, Plato, Estados } from './../datos'
-import { Estilos, Estilo, Pantalla } from './../styles';
+import { Estilos, Estilo, Pantalla, Item } from './../styles';
 
 class Cocinero extends Component {
   constructor(props){
@@ -98,15 +98,20 @@ const ItemPedido = ({item: {cliente, plato, pedido}, alAceptar, alDisponer}) =>
         <CardItem>
           <Grid>
             <Col>
+            <View style={Item.centrar}>
               <Thumbnail source={{uri: cliente.foto}} size={80} />
+            </View>
             </Col>
             <Col>
-              <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3, 0.3)} />
+              <View style={Item.centrar}>
+                <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3, 0.3)} />
+              </View>
             </Col>
             <Col>
-              <View style={{flex: 1, justifyContent: 'center', alignSelf: 'center'}}>
+              <View style={Item.centrar}>
                 {pedido.estado === Estados.pedido && <Button onPress={ () => alAceptar(plato) }> Producir </Button>}
                 {pedido.estado === Estados.aceptado && <Button success onPress={ () => alDisponer(plato)}> Entregar </Button>}
+                {pedido.estado === Estados.entregado && <Text> Esperando valoración... </Text>}
               </View>
             </Col>
           </Grid>

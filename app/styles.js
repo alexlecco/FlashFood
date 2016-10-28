@@ -116,6 +116,14 @@ const Pedido = StyleSheet.create({
   },
 });
 
+const Item = StyleSheet.create({
+  centrar: {
+    flex: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  }
+});
+
 const Usuario = StyleSheet.create({
   id: {
     fontSize: 14,
@@ -131,4 +139,4 @@ const Usuario = StyleSheet.create({
 });
 
 const Estilo = {plato: Plato, pedido: Pedido, usuario: Usuario};
-export {Estilos, Estilo, Pantalla};
+export {Estilos, Estilo, Pantalla, Item};
