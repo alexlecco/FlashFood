@@ -1,7 +1,7 @@
 package com.flashfood;
 
 import com.facebook.react.ReactActivity;
-import com.proxima.RCTDigits.DigitsPackage;
+//import com.proxima.RCTDigits.DigitsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 
 public class MainActivity extends ReactActivity {
