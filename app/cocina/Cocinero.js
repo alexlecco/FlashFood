@@ -100,7 +100,7 @@ const ItemPedido = ({item: {cliente, plato, pedido}, alAceptar, alDisponer}) =>
         <Row><Text>{plato.descripcion}</Text></Row>
       </Col>
       <Col>
-        {pedido.estado === Estados.pedido && <Button onPress={ () => alAceptar(plato) }> Producir </Button>}
+        {pedido.estado === Estados.pedido && <Button success onPress={ () => alAceptar(plato) }> Producir </Button>}
         {pedido.estado === Estados.aceptado && <Button onPress={ () => alDisponer(plato)}> Entregar </Button>}
         <Text>{pedido.tiempoFaltante}</Text>
       </Col>

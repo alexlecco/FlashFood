@@ -29,9 +29,9 @@ const humanizeHora = (segundos) => {
 const Accion = ({pedido}) => {
   switch (pedido.estado) {
     case Estados.pedido:
-        return (<Button block style={Pantalla.accion} onPress={ () => pedido.cancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>)
+        return (<Button block danger style={Pantalla.accion} onPress={ () => pedido.cancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>)
     case Estados.entregado:
-        return (<Button block disabled={!pedido.valoracion} style={Pantalla.accion} onPress={ () => pedido.valorar() }><Icon name='ios-close-circle' />Valorar!</Button>);
+        return (<Button block disabled={!pedido.valoracion} style={Pantalla.accion} onPress={ () => pedido.valorar() }><Icon name='ios-checkmark' />Valorar!</Button>);
     default:
         return null;
   }

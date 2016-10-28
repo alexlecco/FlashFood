@@ -41,7 +41,7 @@ class PaginaConfirmar extends Component {
               <Text> En el bar</Text>
             </ListItem>
           </List>
-          <Button block style={Pantalla.accion1} onPress={ () => alCancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>
+          <Button block danger style={Pantalla.accion1} onPress={ () => alCancelar() }><Icon name='ios-close-circle' /> Cancelar!</Button>
           <Button block disabled={!pedido.lugar} style={Pantalla.accion2} onPress={ () => alConfirmar() }><Icon name='ios-checkmark' /> Confirmar!</Button>
         </Contenido>
       </Pagina>
