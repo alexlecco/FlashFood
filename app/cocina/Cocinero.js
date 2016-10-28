@@ -5,7 +5,7 @@ import { Image } from 'react-native';
 import { Container, Header, Title, Content, Grid, Col, Row, List, ListItem, Card, CardItem, Button, Text, View, Spinner, Icon, Thumbnail, } from 'native-base';
 
 import { Pagina, Contenido, Cargando } from './../componentes/pagina';
-import { Usuario, Pedido, Plato, Estados } from './../datos';
+import { Usuario, Pedido, Plato, Estados } from './../datos'
 import { Estilos, Estilo, Pantalla } from './../styles';
 
 class Cocinero extends Component {
@@ -52,36 +52,7 @@ class Cocinero extends Component {
     pedido && pedido.entregar()
   }
 
-<<<<<<< HEAD:app/cocina/cocinero.js
   calcularComandaDetallada(){
-=======
-  calcularComanda(){
-    const {pedidos, platos, usuarios} = this.state
-
-    var comanda = {}
-    // Ordenar pedidos
-    let pedidosOrdenados = pedidos.sort(Pedido.ordenCronologico)
-    // Completar Informacion
-    let comandita = pedidosOrdenados.map( pedido => ({
-        cliente: usuarios.find((cliente) => cliente.id == pedido.cliente),
-        plato:   platos.find((plato)     => plato.id   == pedido.plato),
-        pedido,
-      })
-    )
-    console.log("PEDIDOS ORDENADOS Y COMPLETADOS")
-    console.log(comandita)
-
-    platos.forEach( plato => comanda[plato.id] = { plato, estados: {} } )
-    pedidos.forEach( ({plato, estado}) => {
-        const estados = comanda[plato].estados
-        estados[estado] = (estados[estado] || 0) + 1
-      }
-    )
-    return Object.keys(comanda).map(plato => comanda[plato])
-  }
-
-  organizarComanda(){
->>>>>>> origin/desarrollo:app/cocina/Cocinero.js
     const {pedidos, platos, usuarios} = this.state
 
     return pedidos.sort(Pedido.ordenCronologico).map( pedido => ({
@@ -222,4 +193,4 @@ const ItemPedido = ({item: {cliente, plato, pedido}, alAceptar, alDisponer}) =>
   //   )
   // }
 
-export { Cocinero }
+export { Cocinero };
