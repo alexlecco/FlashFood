@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 
 import {
   Container, Header, Title, Content,
@@ -24,6 +24,10 @@ const humanizeHora = (segundos) => {
   const h = ((segundos - s - m * 60)/(60*60)) % 24
 
   return `${h > 0 ? h + 'h ' : ''}${m > 0 ? m + 'm ' : ''}${s > 0 ? s + 's' : ''}`
+}
+
+const esCompacto = (Platform) => {
+  return Platform.OS == 'ios' ? false : true
 }
 
 const Accion = ({pedido}) => {
@@ -94,7 +98,7 @@ class PaginaSeguimiento extends Component {
     return (
       <Pagina titulo="Seguimiento.3" alSalir={() => alSalir() }>
         <Contenido>
-          <MostrarPlato plato={plato} compacto={false} />
+          <MostrarPlato plato={plato} compacto={esCompacto(Platform)} />
           <Estado {...this.props} />
           <Accion {...this.props} />
         </Contenido>
