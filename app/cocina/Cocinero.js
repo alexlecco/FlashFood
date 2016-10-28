@@ -90,21 +90,34 @@ const AdministrarComanda = (props) => {
 
 const ItemPedido = ({item: {cliente, plato, pedido}, alAceptar, alDisponer}) =>
   <ListItem>
-    <Grid>
-      <Col>
-        <Row><Thumbnail source={{uri: cliente.foto}} size={80} /></Row>
-        <Row><Text>{cliente.nombre}</Text></Row>
-      </Col>
-      <Col>
-        <Row><Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3, 0.3)} /></Row>
-        <Row><Text>{plato.descripcion}</Text></Row>
-      </Col>
-      <Col>
-        {pedido.estado === Estados.pedido && <Button success onPress={ () => alAceptar(plato) }> Producir </Button>}
-        {pedido.estado === Estados.aceptado && <Button onPress={ () => alDisponer(plato)}> Entregar </Button>}
-        <Text>{pedido.tiempoFaltante}</Text>
-      </Col>
-    </Grid>
+
+      <Card>
+        <CardItem header>
+          <Text>{cliente.nombre}</Text>
+        </CardItem>
+        <CardItem>
+          <Grid>
+            <Col>
+              <Thumbnail source={{uri: cliente.foto}} size={80} />
+            </Col>
+            <Col>
+              <Image source={{uri: plato.foto}} style={Pantalla.imagen(4/3, 0.3)} />
+            </Col>
+            <Col>
+              <View style={{flex: 1, justifyContent: 'center', alignSelf: 'center'}}>
+                {pedido.estado === Estados.pedido && <Button onPress={ () => alAceptar(plato) }> Producir </Button>}
+                {pedido.estado === Estados.aceptado && <Button success onPress={ () => alDisponer(plato)}> Entregar </Button>}
+              </View>
+            </Col>
+          </Grid>
+        </CardItem>
+        <CardItem footer>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>{plato.descripcion}</Text>
+          </View>
+        </CardItem>
+      </Card>
+
   </ListItem>
 
   // calcularComanda(){
