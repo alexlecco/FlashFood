@@ -67,7 +67,7 @@ class Cocinero extends Component {
 
   organizarComanda(){
     const {pedidos, platos, usuarios} = this.state
-    
+
   }
 
   render(){
@@ -81,6 +81,21 @@ class Cocinero extends Component {
 
     return (<AdministrarComanda {...this.props} cocinero={usuario} comanda={comanda} alAceptar={this.alAceptar} alDisponer={this.alDisponer}/>)
   }
+}
+
+const AdministrarComanda = (props) => {
+  const { comanda, cocinero, alSalir } = props
+  return (
+    <Container>
+      <Header>
+        <Title>Comanda para [{cocinero.id}]</Title>
+        <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
+      </Header>
+      <Content style={{flex:1}}>
+        <List dataArray={comanda} renderRow={(item) => <ItemComanda {...props} item={item}/>} />
+      </Content>
+    </Container>
+  )
 }
 
 const ItemPedido = ({pedido}) =>
@@ -97,45 +112,6 @@ const ItemPedido = ({pedido}) =>
       <Col>
         <Button onPress={ () => alAceptar(plato) }>Producir</Button>}
         <Text>{pedido.hora}</Text>
-      </Col>
-    </Grid>
-  </ListItem>
-
-const ItemComanda1 = ({item: {plato, estados}, alAceptar, alDisponer}) =>
-  <ListItem style={{height: 200, borderColor:'blue', borderWidth:1, borderRadius: 5}}>
-    <Grid style={{borderColor:'red',borderWidth:2}}>
-      <Col>
-        <Row>
-          <Text style={{fontSize:12, textAlign: 'center'}}>{plato.descripcion}</Text>
-        </Row>
-        <Row>
-          <Image source={{uri: plato.foto}} style={{width:150, height: 150/(4/3), alignSelf: 'center'}} />
-        </Row>
-      </Col>
-
-      <Col>
-        <Row>
-          <Col>
-            <Text style={Estilo.pedido.descripcion}>Esperando</Text>
-            <Text style={Estilo.pedido.cantidad}>{estados[Estados.pedido] || ""}</Text>
-          </Col>
-          <Col>
-            {estados[Estados.pedido] && <Button onPress={ () => alAceptar(plato) }>Producir</Button>}
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Text style={Estilo.pedido.descripcion}>Cocinado</Text>
-            <Text style={Estilo.pedido.cantidad}>{estados[Estados.aceptado] || ""}</Text>
-          </Col>
-          <Col>
-            {estados[Estados.aceptado] && <Button onPress={ () => alDisponer(plato)}>Entregar</Button>}
-          </Col>
-        </Row>
-        <Row>
-          <Text style={Estilo.pedido.descripcion}>Disponible</Text>
-          <Text style={Estilo.pedido.cantidad}>{estados[Estados.disponible] || ""}</Text>
-        </Row>
       </Col>
     </Grid>
   </ListItem>
@@ -186,20 +162,44 @@ const ItemComanda = ({item: {plato, estados}, alAceptar, alDisponer}) =>
     </Grid>
   </ListItem>
 
-const AdministrarComanda = (props) => {
-  const { comanda, cocinero, alSalir } = props
-  return (
-    <Container>
-      <Header>
-        <Title>Comanda para [{cocinero.id}]</Title>
-        <Button transparent onPress={ () => alSalir() } ><Icon name='ios-home' /></Button>
-      </Header>
-      <Content style={{flex:1}}>
-        <List dataArray={comanda} renderRow={(item) => <ItemComanda {...props} item={item}/>} />
-      </Content>
-    </Container>
-  )
-}
+const ItemComanda1 = ({item: {plato, estados}, alAceptar, alDisponer}) =>
+  <ListItem style={{height: 200, borderColor:'blue', borderWidth:1, borderRadius: 5}}>
+    <Grid style={{borderColor:'red',borderWidth:2}}>
+      <Col>
+        <Row>
+          <Text style={{fontSize:12, textAlign: 'center'}}>{plato.descripcion}</Text>
+        </Row>
+        <Row>
+          <Image source={{uri: plato.foto}} style={{width:150, height: 150/(4/3), alignSelf: 'center'}} />
+        </Row>
+      </Col>
+
+      <Col>
+        <Row>
+          <Col>
+            <Text style={Estilo.pedido.descripcion}>Esperando</Text>
+            <Text style={Estilo.pedido.cantidad}>{estados[Estados.pedido] || ""}</Text>
+          </Col>
+          <Col>
+            {estados[Estados.pedido] && <Button onPress={ () => alAceptar(plato) }>Producir</Button>}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Text style={Estilo.pedido.descripcion}>Cocinado</Text>
+            <Text style={Estilo.pedido.cantidad}>{estados[Estados.aceptado] || ""}</Text>
+          </Col>
+          <Col>
+            {estados[Estados.aceptado] && <Button onPress={ () => alDisponer(plato)}>Entregar</Button>}
+          </Col>
+        </Row>
+        <Row>
+          <Text style={Estilo.pedido.descripcion}>Disponible</Text>
+          <Text style={Estilo.pedido.cantidad}>{estados[Estados.disponible] || ""}</Text>
+        </Row>
+      </Col>
+    </Grid>
+  </ListItem>
 
 console.log("IMPORT: Cocinero")
 
